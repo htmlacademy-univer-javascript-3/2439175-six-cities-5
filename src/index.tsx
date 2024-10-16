@@ -10,7 +10,6 @@ const offersAmount = 312;
 
 root.render(
   <React.StrictMode>
-    <h1>Hello, World!</h1>
     <App offersAmount={offersAmount} />
   </React.StrictMode>
 );
