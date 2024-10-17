@@ -4,8 +4,8 @@ import NotFound from '../../pages/not_found';
 import Login from '../../pages/login';
 import Offer from '../../pages/offer';
 import {AppRoute, AuthorizationStatus} from '../../../constants';
-import PrivateRoute from "../private-route/private-route";
-import Favorites from "../../pages/favorites";
+import PrivateRoute from '../private-route/private-route';
+import Favorites from '../../pages/favorites';
 
 type AppScreenPros = {
   offersAmount: number;
@@ -25,7 +25,8 @@ function App({offersAmount}: AppScreenPros): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} children={<Favorites />} />}
+          // element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} children={<Favorites />} />}
+          element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><Favorites /></PrivateRoute> }
         />
         <Route
           path={AppRoute.OfferWithId}
