@@ -25,7 +25,6 @@ function App({offersAmount}: AppScreenPros): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          // element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth} children={<Favorites />} />}
           element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><Favorites /></PrivateRoute> }
         />
         <Route
