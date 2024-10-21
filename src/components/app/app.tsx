@@ -2,11 +2,11 @@ import MainScreen from '../../pages/main';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import NotFound from '../../pages/not_found';
 import Login from '../../pages/login';
-import Offer_main from '../../pages/offer_main';
 import {AppRoute, AuthorizationStatus} from '../../../constants';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
 import OfferCard from '../../types/offer_card';
+import Offer from '../../pages/offer_main';
 
 type AppScreenProps = {
   offers: OfferCard[];
@@ -30,7 +30,7 @@ function App({offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.OfferWithId}
-          element={<Offer offer={offers[0]}/>}
+          element={<Offer />}
         />
         <Route
           path={'*'}

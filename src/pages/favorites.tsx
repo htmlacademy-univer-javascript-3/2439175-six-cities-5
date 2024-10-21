@@ -1,4 +1,6 @@
 import OfferCard from '../types/offer_card';
+import {Link} from 'react-router-dom';
+import Logo from '../components/logo/logo';
 
 type FavoritesProps = {
   offers: OfferCard[];
@@ -45,9 +47,11 @@ function FavoriteCard({offer}: FavoriteProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
-        </h2>
+        <Link className="place-card__name" to={`/offer/${offer.id}`}>
+          <h2>
+            {offer.title}
+          </h2>
+        </Link>
         <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
@@ -71,9 +75,7 @@ function Favorites({offers}: FavoritesProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"></img>
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">

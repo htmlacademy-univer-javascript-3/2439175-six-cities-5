@@ -1,6 +1,7 @@
 import Logo from '../components/logo/logo';
+import SendComment from '../components/comment/send_comment';
 
-function OfferNotLogged(): JSX.Element {
+function OfferDetailed(): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -15,7 +16,13 @@ function OfferNotLogged(): JSX.Element {
                   <a className="header__nav-link header__nav-link--profile" href="#">
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
-                    <span className="header__login">Sign in</span>
+                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <span className="header__favorite-count">3</span>
+                  </a>
+                </li>
+                <li className="header__nav-item">
+                  <a className="header__nav-link" href="#">
+                    <span className="header__signout">Sign out</span>
                   </a>
                 </li>
               </ul>
@@ -178,6 +185,7 @@ function OfferNotLogged(): JSX.Element {
                     </div>
                   </li>
                 </ul>
+                <SendComment />
               </section>
             </div>
           </div>
@@ -190,10 +198,7 @@ function OfferNotLogged(): JSX.Element {
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
                   <a href="#">
-                    <img className="place-card__image" src="img/room.jpg" width="260" height="200"
-                      alt="Place image"
-                    >
-                    </img>
+                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image"></img>
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -304,4 +309,4 @@ function OfferNotLogged(): JSX.Element {
   );
 }
 
-export default OfferNotLogged;
+export default OfferDetailed;

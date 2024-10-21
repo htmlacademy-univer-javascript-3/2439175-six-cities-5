@@ -1,12 +1,14 @@
 import OfferCard from '../types/offer_card';
 import {Dispatch, SetStateAction, useState} from 'react';
+import {Link} from 'react-router-dom';
+import Logo from '../components/logo/logo';
 
 type OfferCardsProps = {
   offerCard: OfferCard;
   setActiveOffer: Dispatch<SetStateAction<number>>;
 }
 
-function Offer({offerCard, setActiveOffer}: OfferCardsProps): JSX.Element {
+function OfferCard({offerCard, setActiveOffer}: OfferCardsProps): JSX.Element {
   return (
     <article className="cities__card place-card" onMouseEnter={() => {
       setActiveOffer(offerCard.id);
@@ -41,9 +43,11 @@ function Offer({offerCard, setActiveOffer}: OfferCardsProps): JSX.Element {
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <a href="#">{offerCard.title}</a>
-        </h2>
+        <Link to={`/offer/${offerCard.id}`}>
+          <h2 className="place-card__name">
+            <a href="#">{offerCard.title}</a>
+          </h2>
+        </Link>
         <p className="place-card__type">{offerCard.type}</p>
       </div>
     </article>
@@ -61,7 +65,7 @@ function OffersList({offers}: OffersListProps): JSX.Element {
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <Offer offerCard={offer} key={offer.id} setActiveOffer={setActiveOffer}/>
+        <OfferCard offerCard={offer} key={offer.id} setActiveOffer={setActiveOffer}/>
       ))}
     </div>
   );
@@ -78,9 +82,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"></img>
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
