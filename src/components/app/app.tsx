@@ -2,22 +2,23 @@ import MainScreen from '../../pages/main';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import NotFound from '../../pages/not_found';
 import Login from '../../pages/login';
-import Offer from '../../pages/offer';
+import Offer_main from '../../pages/offer_main';
 import {AppRoute, AuthorizationStatus} from '../../../constants';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
+import OfferCard from '../../types/offer_card';
 
-type AppScreenPros = {
-  offersAmount: number;
+type AppScreenProps = {
+  offers: OfferCard[];
 }
 
-function App({offersAmount}: AppScreenPros): JSX.Element {
+function App({offers}: AppScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen offersAmount={offersAmount} /> }
+          element={<MainScreen offers={offers} /> }
         />
         <Route
           path={AppRoute.Login}
@@ -25,11 +26,11 @@ function App({offersAmount}: AppScreenPros): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}><Favorites /></PrivateRoute> }
+          element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><Favorites offers={offers}/></PrivateRoute> }
         />
         <Route
           path={AppRoute.OfferWithId}
-          element={<Offer />}
+          element={<Offer offer={offers[0]}/>}
         />
         <Route
           path={'*'}

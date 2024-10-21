@@ -1,18 +1,31 @@
-function OfferCard(): JSX.Element {
+import OfferCard from '../types/offer_card';
+import {Dispatch, SetStateAction, useState} from 'react';
+
+type OfferCardsProps = {
+  offerCard: OfferCard;
+  setActiveOffer: Dispatch<SetStateAction<number>>;
+}
+
+function Offer({offerCard, setActiveOffer}: OfferCardsProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+    <article className="cities__card place-card" onMouseEnter={() => {
+      setActiveOffer(offerCard.id);
+    }} onMouseLeave={() => setActiveOffer(0)}
+    >
+      {offerCard.isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image"></img>
+          <img className="place-card__image" src={offerCard.photo} width="260" height="200" alt="Place image"></img>
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{offerCard.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -24,24 +37,41 @@ function OfferCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${offerCard.rating * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
+          <a href="#">{offerCard.title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offerCard.type}</p>
       </div>
     </article>
   );
 }
 
-type MainScreenPros = {
-  offersAmount: number;
+type OffersListProps = {
+  offers: OfferCard[];
 }
 
-function MainScreen({offersAmount}: MainScreenPros): JSX.Element {
+function OffersList({offers}: OffersListProps): JSX.Element {
+  const [activeOffer, setActiveOffer]: [null | number, Dispatch<SetStateAction<number>>] = useState(0);
+  // eslint-disable-next-line no-console
+  console.log(activeOffer);
+  return (
+    <div className="cities__places-list places__list tabs__content">
+      {offers.map((offer) => (
+        <Offer offerCard={offer} key={offer.id} setActiveOffer={setActiveOffer}/>
+      ))}
+    </div>
+  );
+}
+
+type MainScreenProps = {
+  offers: OfferCard[];
+}
+
+function MainScreen({offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -115,7 +145,7 @@ function MainScreen({offersAmount}: MainScreenPros): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersAmount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -131,13 +161,7 @@ function MainScreen({offersAmount}: MainScreenPros): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCard/>
-                <OfferCard/>
-                <OfferCard/>
-                <OfferCard/>
-                <OfferCard/>
-              </div>
+              <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
