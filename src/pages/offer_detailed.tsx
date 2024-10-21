@@ -1,7 +1,7 @@
 import Logo from '../components/logo/logo';
 import SendComment from '../components/comment/send_comment';
 
-function OfferDetailed(): JSX.Element {
+function Offer_detailed(): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -309,4 +309,4 @@ function OfferDetailed(): JSX.Element {
   );
 }
 
-export default OfferDetailed;
+export default Offer_detailed;
