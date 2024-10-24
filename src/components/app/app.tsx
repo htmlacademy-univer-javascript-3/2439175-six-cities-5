@@ -2,7 +2,7 @@ import MainScreen from '../../pages/main';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
 import NotFound from '../../pages/not_found';
 import Login from '../../pages/login';
-import {AppRoute, AuthorizationStatus} from '../../../constants';
+import {AppRoute, AuthorizationStatus} from '../../../enums';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
 import OfferCard from '../../types/offer_card';

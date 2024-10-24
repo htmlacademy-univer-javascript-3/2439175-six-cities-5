@@ -1,18 +1,18 @@
 import OfferCard from '../types/offer_card';
-import {Dispatch, SetStateAction, useState} from 'react';
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../components/logo/logo';
 
 type OfferCardsProps = {
   offerCard: OfferCard;
-  setActiveOffer: Dispatch<SetStateAction<number>>;
+  onCardHovered: (id: number) => void;
 }
 
-function OfferCard({offerCard, setActiveOffer}: OfferCardsProps): JSX.Element {
+function OfferCard({offerCard, onCardHovered}: OfferCardsProps): JSX.Element {
   return (
     <article className="cities__card place-card" onMouseEnter={() => {
-      setActiveOffer(offerCard.id);
-    }} onMouseLeave={() => setActiveOffer(0)}
+      onCardHovered(offerCard.id);
+    }} onMouseLeave={() => onCardHovered(0)}
     >
       {offerCard.isPremium && (
         <div className="place-card__mark">
@@ -59,13 +59,11 @@ type OffersListProps = {
 }
 
 function OffersList({offers}: OffersListProps): JSX.Element {
-  const [activeOffer, setActiveOffer]: [null | number, Dispatch<SetStateAction<number>>] = useState(0);
-  // eslint-disable-next-line no-console
-  console.log(activeOffer);
+  const [, setActiveOffer] = useState(0);
   return (
     <div className="cities__places-list places__list tabs__content">
       {offers.map((offer) => (
-        <OfferCard offerCard={offer} key={offer.id} setActiveOffer={setActiveOffer}/>
+        <OfferCard offerCard={offer} key={offer.id} onCardHovered={(id) => setActiveOffer(id)}/>
       ))}
     </div>
   );
