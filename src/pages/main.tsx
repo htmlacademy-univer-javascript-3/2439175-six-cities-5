@@ -1,18 +1,33 @@
-function OfferCard(): JSX.Element {
+import OfferCard from '../types/offer_card';
+import {useState} from 'react';
+import {Link} from 'react-router-dom';
+import Logo from '../components/logo/logo';
+
+type OfferCardsProps = {
+  offerCard: OfferCard;
+  onCardHovered: (id: number) => void;
+}
+
+function OfferCard({offerCard, onCardHovered}: OfferCardsProps): JSX.Element {
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>Premium</span>
-      </div>
+    <article className="cities__card place-card" onMouseEnter={() => {
+      onCardHovered(offerCard.id);
+    }} onMouseLeave={() => onCardHovered(0)}
+    >
+      {offerCard.isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src="img/apartment-01.jpg" width="260" height="200" alt="Place image"></img>
+          <img className="place-card__image" src={offerCard.photo} width="260" height="200" alt="Place image"></img>
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;120</b>
+            <b className="place-card__price-value">&euro;{offerCard.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
@@ -24,33 +39,48 @@ function OfferCard(): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${offerCard.rating * 20}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <a href="#">Beautiful &amp; luxurious apartment at great location</a>
-        </h2>
-        <p className="place-card__type">Apartment</p>
+        <Link to={`/offer/${offerCard.id}`}>
+          <h2 className="place-card__name">
+            <a href="#">{offerCard.title}</a>
+          </h2>
+        </Link>
+        <p className="place-card__type">{offerCard.type}</p>
       </div>
     </article>
   );
 }
 
-type MainScreenPros = {
-  offersAmount: number;
+type OffersListProps = {
+  offers: OfferCard[];
 }
 
-function MainScreen({offersAmount}: MainScreenPros): JSX.Element {
+function OffersList({offers}: OffersListProps): JSX.Element {
+  const [, setActiveOffer] = useState(0);
+  return (
+    <div className="cities__places-list places__list tabs__content">
+      {offers.map((offer) => (
+        <OfferCard offerCard={offer} key={offer.id} onCardHovered={(id) => setActiveOffer(id)}/>
+      ))}
+    </div>
+  );
+}
+
+type MainScreenProps = {
+  offers: OfferCard[];
+}
+
+function MainScreen({offers}: MainScreenProps): JSX.Element {
   return (
     <div className="page page--gray page--main">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <a className="header__logo-link header__logo-link--active">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"></img>
-              </a>
+              <Logo />
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
@@ -115,7 +145,7 @@ function MainScreen({offersAmount}: MainScreenPros): JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offersAmount} places to stay in Amsterdam</b>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -131,13 +161,7 @@ function MainScreen({offersAmount}: MainScreenPros): JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCard/>
-                <OfferCard/>
-                <OfferCard/>
-                <OfferCard/>
-                <OfferCard/>
-              </div>
+              <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>
