@@ -1,6 +1,8 @@
 import {OfferType} from '../enums/offer_type_enums';
+import Coords from './hotel_coords.ts';
+import {City} from './city.ts';
 
-type OfferCard = {
+type Hotel = {
   title: string;
   isPremium: boolean;
   photo: string;
@@ -8,7 +10,8 @@ type OfferCard = {
   type: OfferType;
   id: number;
   price: number;
-
+  coordinates: Coords;
+  city: City;
 }
 
-export default OfferCard;
+export default Hotel;

@@ -1,10 +1,12 @@
-import OfferCard from '../types/offer_card';
+import Hotel from '../types/hotel.tsx';
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import Logo from '../components/logo/logo';
+import Map from '../components/map/map.tsx';
+import {AMSTERDAM} from '../mocks/city_coords.ts';
 
 type OfferCardsProps = {
-  offerCard: OfferCard;
+  offerCard: Hotel;
   onCardHovered: (id: number) => void;
 }
 
@@ -55,7 +57,7 @@ function OfferCard({offerCard, onCardHovered}: OfferCardsProps): JSX.Element {
 }
 
 type OffersListProps = {
-  offers: OfferCard[];
+  offers: Hotel[];
 }
 
 function OffersList({offers}: OffersListProps): JSX.Element {
@@ -70,7 +72,7 @@ function OffersList({offers}: OffersListProps): JSX.Element {
 }
 
 type MainScreenProps = {
-  offers: OfferCard[];
+  offers: Hotel[];
 }
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
@@ -164,7 +166,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={AMSTERDAM} hotels={offers} selectedHotel={undefined} />
             </div>
           </div>
         </div>

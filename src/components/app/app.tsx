@@ -5,11 +5,11 @@ import Login from '../../pages/login';
 import {AppRoute, AuthorizationStatus} from '../../../enums';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
-import OfferCard from '../../types/offer_card';
+import Hotel from '../../types/hotel.tsx';
 import Offer from '../../pages/offer_detailed';
 
 type AppScreenProps = {
-  offers: OfferCard[];
+  offers: Hotel[];
 }
 
 function App({offers}: AppScreenProps): JSX.Element {

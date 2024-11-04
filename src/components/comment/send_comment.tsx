@@ -1,5 +1,5 @@
 import {ChangeEvent, useState} from 'react';
-import {StarsDescription} from '../../../constatns';
+import {StarsDescription} from '../../../const_components.tsx';
 
 function SendComment(): JSX.Element {
   const [formState, setFormState] = useState({rating: '', review: ''});
