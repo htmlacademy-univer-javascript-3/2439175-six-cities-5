@@ -5,11 +5,13 @@ import Login from '../../pages/login';
 import {AppRoute, AuthorizationStatus} from '../../../enums';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
-import Hotel from '../../types/hotel.tsx';
-import Offer from '../../pages/offer_detailed';
+import Offer from '../../types/offer.tsx';
+import OfferDetailed from '../../pages/offer_detailed';
+import {review} from '../../mocks/review.tsx';
+import {offerCards} from '../../mocks/offer_cards.tsx';
 
 type AppScreenProps = {
-  offers: Hotel[];
+  offers: Offer[];
 }
 
 function App({offers}: AppScreenProps): JSX.Element {
@@ -30,7 +32,7 @@ function App({offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.OfferWithId}
-          element={<Offer />}
+          element={<OfferDetailed reviews={[review]} nearestHotels={offerCards.slice(1)}/>}
         />
         <Route
           path={'*'}

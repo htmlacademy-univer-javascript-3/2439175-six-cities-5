@@ -1,13 +1,13 @@
-import Hotel from '../types/hotel.tsx';
+import Offer from '../types/offer.tsx';
 import {Link} from 'react-router-dom';
 import Logo from '../components/logo/logo';
 
 type FavoritesProps = {
-  offers: Hotel[];
+  offers: Offer[];
 }
 
 type FavoriteProps = {
-  offer: Hotel;
+  offer: Offer;
 }
 
 function FavoriteCard({offer}: FavoriteProps): JSX.Element {

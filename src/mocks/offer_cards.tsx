@@ -1,8 +1,8 @@
-import Hotel from '../types/hotel.tsx';
+import Offer from '../types/offer.tsx';
 import {OfferType} from '../enums/offer_type_enums';
 import {AMSTERDAM} from './city_coords.ts';
 
-export const offerCards : Hotel[] = [
+export const offerCards : Offer[] = [
   {
     id: 1,
     title: 'Beautiful & luxurious studio at great location',
@@ -16,6 +16,7 @@ export const offerCards : Hotel[] = [
       longitude: 4.85309666406198
     },
     city: AMSTERDAM,
+    isFavourite: false,
   },
   {
     id: 2,
@@ -30,6 +31,7 @@ export const offerCards : Hotel[] = [
       longitude: 4.85309666406198
     },
     city: AMSTERDAM,
+    isFavourite: true,
   },
   {
     id: 3,
@@ -44,6 +46,7 @@ export const offerCards : Hotel[] = [
       longitude: 4.929309666406198,
     },
     city: AMSTERDAM,
+    isFavourite: false,
   },
   {
     id: 4,
@@ -58,5 +61,6 @@ export const offerCards : Hotel[] = [
       longitude: 4.939309666406198,
     },
     city: AMSTERDAM,
+    isFavourite: false,
   }
 ];
