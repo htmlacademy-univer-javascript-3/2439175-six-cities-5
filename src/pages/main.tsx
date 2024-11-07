@@ -1,78 +1,11 @@
-import Hotel from '../types/hotel.tsx';
-import {useState} from 'react';
-import {Link} from 'react-router-dom';
+import Offer from '../types/offer.tsx';
 import Logo from '../components/logo/logo';
 import Map from '../components/map/map.tsx';
 import {AMSTERDAM} from '../mocks/city_coords.ts';
-
-type OfferCardsProps = {
-  offerCard: Hotel;
-  onCardHovered: (id: number) => void;
-}
-
-function OfferCard({offerCard, onCardHovered}: OfferCardsProps): JSX.Element {
-  return (
-    <article className="cities__card place-card" onMouseEnter={() => {
-      onCardHovered(offerCard.id);
-    }} onMouseLeave={() => onCardHovered(0)}
-    >
-      {offerCard.isPremium && (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      )}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={offerCard.photo} width="260" height="200" alt="Place image"></img>
-        </a>
-      </div>
-      <div className="place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offerCard.price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
-        </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: `${offerCard.rating * 20}%`}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <Link to={`/offer/${offerCard.id}`}>
-          <h2 className="place-card__name">
-            <a href="#">{offerCard.title}</a>
-          </h2>
-        </Link>
-        <p className="place-card__type">{offerCard.type}</p>
-      </div>
-    </article>
-  );
-}
-
-type OffersListProps = {
-  offers: Hotel[];
-}
-
-function OffersList({offers}: OffersListProps): JSX.Element {
-  const [, setActiveOffer] = useState(0);
-  return (
-    <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
-        <OfferCard offerCard={offer} key={offer.id} onCardHovered={(id) => setActiveOffer(id)}/>
-      ))}
-    </div>
-  );
-}
+import OffersList from '../components/offer/offer_list.tsx';
 
 type MainScreenProps = {
-  offers: Hotel[];
+  offers: Offer[];
 }
 
 function MainScreen({offers}: MainScreenProps): JSX.Element {
@@ -166,7 +99,7 @@ function MainScreen({offers}: MainScreenProps): JSX.Element {
               <OffersList offers={offers}/>
             </section>
             <div className="cities__right-section">
-              <Map city={AMSTERDAM} hotels={offers} selectedHotel={undefined} />
+              <Map city={AMSTERDAM} hotels={offers} view={'cities'}/>
             </div>
           </div>
         </div>

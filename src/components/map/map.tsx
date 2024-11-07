@@ -3,7 +3,7 @@ import {useEffect, useRef} from 'react';
 import {Icon, layerGroup, Marker} from 'leaflet';
 import {City} from '../../types/city.ts';
 import useMap from './useMap.tsx';
-import Hotel from '../../types/hotel.tsx';
+import Offer from '../../types/offer.tsx';
 import {CURRENT_MAP_ICON, DEFAULT_MAP_ICON} from '../../../const.tsx';
 
 const defaultCustomIcon = new Icon({
@@ -20,12 +20,13 @@ const currentCustomIcon = new Icon({
 
 type MapProps = {
   city: City;
-  hotels: Hotel[];
-  selectedHotel: Hotel | undefined;
+  hotels: Offer[];
+  selectedHotelId?: number;
+  view: 'offer' | 'cities';
 };
 
 export default function Map(props: MapProps) {
-  const {city, hotels, selectedHotel} = props;
+  const {city, hotels, selectedHotelId} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -41,7 +42,7 @@ export default function Map(props: MapProps) {
 
         marker
           .setIcon(
-            selectedHotel !== undefined && hotel.title === selectedHotel.title
+            selectedHotelId && hotel.id === selectedHotelId
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -52,7 +53,7 @@ export default function Map(props: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, hotels, selectedHotel]);
+  }, [map, hotels, selectedHotelId]);
 
-  return <section className="cities__map" ref={mapRef}></section>;
+  return <section className={`${props.view}__map`} ref={mapRef}></section>;
 }
