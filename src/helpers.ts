@@ -1,3 +1,6 @@
+import Offer from './types/offer.ts';
+import {City} from './types/city.ts';
+
 export function convertRatingToWidth(rating: number): string {
   return `${rating * 20}%`;
 }
@@ -15,4 +18,8 @@ export function formatDateToYMD(date: Date): string {
   const day = date.getDate().toString().padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+}
+
+export function filterOffersByCity(offers: Offer[], city: City): Offer[] {
+  return offers.filter((offer) => offer.city.title === city.title);
 }

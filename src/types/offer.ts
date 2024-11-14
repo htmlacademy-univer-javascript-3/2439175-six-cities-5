@@ -1,5 +1,5 @@
-import {OfferType} from '../enums/offer_type_enums';
-import Coords from './hotel_coords.ts';
+import {OfferType} from '../enums/offer-type.ts';
+import Coords from './hotel-coords.ts';
 import {City} from './city.ts';
 
 type Offer = {

@@ -1,26 +1,22 @@
-import MainScreen from '../../pages/main';
+import Main from '../../pages/main';
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
-import NotFound from '../../pages/not_found';
+import NotFound from '../../pages/not-found.tsx';
 import Login from '../../pages/login';
-import {AppRoute, AuthorizationStatus} from '../../../enums';
+import {AppRoute, AuthorizationStatus} from '../../enums.ts';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
-import Offer from '../../types/offer.tsx';
-import OfferDetailed from '../../pages/offer_detailed';
-import {review} from '../../mocks/review.tsx';
-import {offerCards} from '../../mocks/offer_cards.tsx';
+import OfferDetailed from '../../pages/offer-detailed.tsx';
+import {review} from '../../mocks/review.ts';
+import {offerCards} from '../../mocks/offer-cards.ts';
+import {CITIES} from '../../mocks/city-coords.ts';
 
-type AppScreenProps = {
-  offers: Offer[];
-}
-
-function App({offers}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<MainScreen offers={offers} /> }
+          element={<Main cities={CITIES} /> }
         />
         <Route
           path={AppRoute.Login}
@@ -28,7 +24,7 @@ function App({offers}: AppScreenProps): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><Favorites offers={offers}/></PrivateRoute> }
+          element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><Favorites offers={offerCards}/></PrivateRoute> }
         />
         <Route
           path={AppRoute.OfferWithId}

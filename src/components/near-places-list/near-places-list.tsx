@@ -1,6 +1,6 @@
-import Offer from '../../types/offer.tsx';
+import Offer from '../../types/offer.ts';
 import {useState} from 'react';
-import OfferItem from '../offer/offer_item.tsx';
+import OfferItem from '../offer-list/offer-item.tsx';
 
 type NearPlacesListProps = {
   offers: Offer[];
@@ -12,7 +12,7 @@ function NearPlacesList({offers}: NearPlacesListProps): JSX.Element {
     <div className="near-places__list places__list">
       {offers.map((offer: Offer) => (
         <OfferItem key={offer.id} offer={offer} onCardHovered={(id) => setActiveOffer(id)}
-          view={'near-places'}
+          view={'near-places-list'}
         />
       ))}
     </div>

@@ -1,4 +1,4 @@
-import Offer from '../types/offer.tsx';
+import Offer from '../types/offer.ts';
 import {Link} from 'react-router-dom';
 import Logo from '../components/logo/logo';
 
