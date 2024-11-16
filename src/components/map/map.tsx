@@ -4,7 +4,8 @@ import {Icon, layerGroup, Marker} from 'leaflet';
 import {City} from '../../types/city.ts';
 import useMap from './use-map.tsx';
 import Offer from '../../types/offer.ts';
-import {CURRENT_MAP_ICON, DEFAULT_MAP_ICON} from '../../const.ts';
+import {CURRENT_MAP_ICON, DEFAULT_MAP_ICON} from '../../consts/map-icon-consts.ts';
+import {useAppSelector} from '../../hooks';
 
 const defaultCustomIcon = new Icon({
   iconUrl: DEFAULT_MAP_ICON,
@@ -21,13 +22,12 @@ const currentCustomIcon = new Icon({
 export type MapProps = {
   city: City;
   offers: Offer[];
-  selectedHotelId?: number;
   view: 'offer' | 'cities';
 };
 
 export default function Map(props: MapProps) {
-  const {city, offers, selectedHotelId} = props;
-
+  const {city, offers} = props;
+  const selectedOfferId = useAppSelector((state) => state.selectedOfferId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
@@ -42,7 +42,7 @@ export default function Map(props: MapProps) {
 
         marker
           .setIcon(
-            selectedHotelId && hotel.id === selectedHotelId
+            selectedOfferId && hotel.id === selectedOfferId
               ? currentCustomIcon
               : defaultCustomIcon
           )
@@ -53,7 +53,7 @@ export default function Map(props: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedHotelId]);
+  }, [map, offers, selectedOfferId]);
 
   return <section className={`${props.view}__map`} ref={mapRef}></section>;
 }

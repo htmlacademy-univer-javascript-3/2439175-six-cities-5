@@ -92,5 +92,20 @@ export const offerCards : Offer[] = [
     },
     city: DUSSELDORF,
     isFavourite: false,
-  }
+  },
+  {
+    id: 7,
+    title: 'Beautiful & luxurious studio at great location BUT MORE EXPENSIVE',
+    isPremium: true,
+    photo: 'img/room.jpg',
+    rating: 5,
+    type: OfferType.Apartment,
+    price: 210000,
+    coordinates: {
+      latitude: 52.3909553943608,
+      longitude: 4.85309666407198
+    },
+    city: AMSTERDAM,
+    isFavourite: false,
+  },
 ];
