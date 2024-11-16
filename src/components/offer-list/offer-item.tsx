@@ -1,11 +1,11 @@
-import Offer from '../../types/offer.tsx';
+import Offer from '../../types/offer.ts';
 import {Link} from 'react-router-dom';
-import {convertRatingToWidth} from '../../helpers.tsx';
+import {convertRatingToWidth} from '../../helpers.ts';
 
 type OfferItemProps = {
   offer: Offer;
   onCardHovered: (id: number) => void;
-  view: 'cities' | 'near-places';
+  view: 'cities' | 'near-places-list';
 }
 
 function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
@@ -46,7 +46,7 @@ function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
         </div>
         <Link to={`/offer/${offer.id}`}>
           <h2 className="place-card__name">
-            <a href="#">{offer.title}</a>
+            <span>{offer.title}</span>
           </h2>
         </Link>
         <p className="place-card__type">{offer.type}</p>

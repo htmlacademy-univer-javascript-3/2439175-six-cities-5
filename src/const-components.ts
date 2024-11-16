@@ -4,4 +4,4 @@ export const StarsDescription: {[key: number]: string} = {
   3: 'not bad',
   2: 'badly',
   1: 'terribly'
-};
+} as const;

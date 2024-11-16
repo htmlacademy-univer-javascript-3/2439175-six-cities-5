@@ -1,11 +1,11 @@
 import Logo from '../components/logo/logo';
-import SendComment from '../components/comment/send_comment';
-import Review from '../types/review.tsx';
-import {ReviewList} from '../components/review/review_list.tsx';
-import {AMSTERDAM} from '../mocks/city_coords.ts';
+import SendComment from '../components/comment/send-comment.tsx';
+import Review from '../types/review.ts';
+import {ReviewList} from '../components/review-list/review-list.tsx';
+import {AMSTERDAM} from '../mocks/city-coords.ts';
+import Offer from '../types/offer.ts';
+import NearPlacesList from '../components/near-places-list/near-places-list.tsx';
 import Map from '../components/map/map.tsx';
-import Offer from '../types/offer.tsx';
-import NearPlacesList from '../components/near-places/near_places_list.tsx';
 
 type OfferDetailedProps = {
   reviews: Review[];
@@ -175,7 +175,7 @@ function OfferDetailed({reviews, nearestHotels}: OfferDetailedProps): JSX.Elemen
               </section>
             </div>
           </div>
-          <Map city={AMSTERDAM} hotels={nearestHotels} view={'offer'}/>
+          <Map city={AMSTERDAM} offers={nearestHotels} view='offer' />
         </section>
         <div className="container">
           <section className="near-places places">

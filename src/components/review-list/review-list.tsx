@@ -1,5 +1,5 @@
-import Review from '../../types/review';
-import ReviewItem from './review_item.tsx';
+import Review from '../../types/review.ts';
+import ReviewItem from './review-item.tsx';
 
 type ReviewListProps = {
   reviews: Review[];

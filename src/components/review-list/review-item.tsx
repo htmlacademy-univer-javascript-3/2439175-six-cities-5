@@ -1,5 +1,5 @@
-import Review from '../../types/review';
-import {convertRatingToWidth, formatDateToYMD, getMonthAndYear} from '../../helpers.tsx';
+import Review from '../../types/review.ts';
+import {convertRatingToWidth, formatDateToYMD, getMonthAndYear} from '../../helpers.ts';
 
 type ReviewItemProps = {
   review: Review;

@@ -9,5 +9,4 @@ export const enum OfferExtras {
   Towels = 'Towels',
   BabySeat = 'Baby seat',
   CabelTV = 'Cabel TV'
-
 }
