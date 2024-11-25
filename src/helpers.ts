@@ -22,7 +22,7 @@ export function formatDateToYMD(date: Date): string {
 }
 
 export function filterOffersByCity(offers: Offer[], city: City): Offer[] {
-  return offers.filter((offer) => offer.city.title === city.title);
+  return offers.filter((offer) => offer.city.name === city.name);
 }
 
 export function sortOffersByPrice(offers: Offer[], asc: boolean): Offer[] {

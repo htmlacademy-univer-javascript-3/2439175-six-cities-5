@@ -1,6 +1,6 @@
+import {Location} from './location.ts';
+
 export type City = {
-  title: string;
-  latitude: number;
-  longitude: number;
-  zoom: number;
+  name: string;
+  location: Location;
 };

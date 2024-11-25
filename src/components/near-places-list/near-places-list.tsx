@@ -13,7 +13,7 @@ function NearPlacesList({offers}: NearPlacesListProps): JSX.Element {
     <div className="near-places__list places__list">
       {offers.map((offer: Offer) => (
         <OfferItem key={offer.id} offer={offer}
-          onCardHovered={(id) => dispatcher(changeSelectedOfferId({id}))}
+          onCardHovered={(id) => dispatcher(changeSelectedOfferId(id))}
           view={'near-places-list'}
         />
       ))}

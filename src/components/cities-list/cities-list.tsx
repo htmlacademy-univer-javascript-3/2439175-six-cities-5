@@ -12,13 +12,13 @@ function CitiesList({cities}: CitiesListProps): JSX.Element {
     <section className="locations container">
       <ul className="locations__list tabs__list">
         {cities.map((city) => (
-          <li className="locations__item" key={city.title}
+          <li className="locations__item" key={city.name}
             onClick={() => {
               dispatch(changeCity({city: city}));
             }}
           >
             <a className="locations__item-link tabs__item" href="#">
-              <span>{city.title}</span>
+              <span>{city.name}</span>
             </a>
           </li>
         ))}

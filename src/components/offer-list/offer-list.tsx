@@ -10,7 +10,7 @@ function OffersList(): JSX.Element {
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{offers.length} places to stay in {city.title}</b>
+      <b className="places__found">{offers.length} places to stay in {city.name}</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
         <span className="places__sorting-type" tabIndex={0}>
@@ -24,7 +24,7 @@ function OffersList(): JSX.Element {
       <div className="cities__places-list places__list tabs__content">
         {offers.map((offer) => (
           <OfferItem offer={offer} key={offer.id} onCardHovered={
-            (id) => dispatch(changeSelectedOfferId({id}))
+            (id) => dispatch(changeSelectedOfferId(id))
           }
           view={'cities'}
           />
