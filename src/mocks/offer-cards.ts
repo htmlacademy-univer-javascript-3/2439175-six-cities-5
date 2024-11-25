@@ -11,9 +11,10 @@ export const offerCards : Offer[] = [
     rating: 4,
     type: OfferType.Apartment,
     price: 210,
-    coordinates: {
+    location: {
       latitude: 52.3909553943508,
-      longitude: 4.85309666406198
+      longitude: 4.85309666406198,
+      zoom: 8,
     },
     city: AMSTERDAM,
     isFavourite: false,
@@ -26,9 +27,10 @@ export const offerCards : Offer[] = [
     rating: 1,
     type: OfferType.Apartment,
     price: 696969,
-    coordinates: {
+    location: {
       latitude: 48.856663,
       longitude: 2.351556,
+      zoom: 8,
     },
     city: PARIS,
     isFavourite: true,
@@ -41,9 +43,10 @@ export const offerCards : Offer[] = [
     rating: 3,
     type: OfferType.Apartment,
     price: 1337,
-    coordinates: {
+    location: {
       latitude: 50.930779,
       longitude: 6.938399,
+      zoom: 8,
     },
     city: COLOGNE,
     isFavourite: false,
@@ -56,9 +59,10 @@ export const offerCards : Offer[] = [
     rating: 2,
     type: OfferType.Apartment,
     price: 420,
-    coordinates: {
+    location: {
       latitude: 50.846697,
       longitude: 4.352544,
+      zoom: 8,
     },
     city: BRUSSELS,
     isFavourite: false,
@@ -71,9 +75,10 @@ export const offerCards : Offer[] = [
     rating: 2,
     type: OfferType.Apartment,
     price: 420,
-    coordinates: {
+    location: {
       latitude: 53.550688,
       longitude:  9.992895,
+      zoom: 8,
     },
     city: HAMBURG,
     isFavourite: false,
@@ -86,9 +91,10 @@ export const offerCards : Offer[] = [
     rating: 2,
     type: OfferType.Apartment,
     price: 420,
-    coordinates: {
+    location: {
       latitude: 53.550688,
       longitude:  9.992895,
+      zoom: 8,
     },
     city: DUSSELDORF,
     isFavourite: false,
@@ -101,9 +107,10 @@ export const offerCards : Offer[] = [
     rating: 5,
     type: OfferType.Apartment,
     price: 210000,
-    coordinates: {
+    location: {
       latitude: 52.3909553943608,
-      longitude: 4.85309666407198
+      longitude: 4.85309666407198,
+      zoom: 8,
     },
     city: AMSTERDAM,
     isFavourite: false,
