@@ -9,8 +9,19 @@ import OfferDetailed from '../../pages/offer-detailed.tsx';
 import {review} from '../../mocks/review.ts';
 import {offerCards} from '../../mocks/offer-cards.ts';
 import {CITIES} from '../../mocks/city-coords.ts';
+import {useAppSelector} from '../../hooks';
+import {Spinner} from '../../pages/spinner/spinner.tsx';
 
 function App(): JSX.Element {
+  const authorizationStatus = AuthorizationStatus.NoAuth;
+  const dataOffersLoadingStatus = useAppSelector((state) => state.offersDataLoadingStatus);
+
+  if (dataOffersLoadingStatus) {
+    return (
+      <Spinner />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Routes>
@@ -24,7 +35,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Favorites}
-          element={<PrivateRoute authorizationStatus={AuthorizationStatus.Auth}><Favorites offers={offerCards}/></PrivateRoute> }
+          element={<PrivateRoute authorizationStatus={authorizationStatus}><Favorites offers={offerCards}/></PrivateRoute> }
         />
         <Route
           path={AppRoute.OfferWithId}

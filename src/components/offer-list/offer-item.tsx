@@ -4,7 +4,7 @@ import {convertRatingToWidth} from '../../helpers.ts';
 
 type OfferItemProps = {
   offer: Offer;
-  onCardHovered: (id: number) => void;
+  onCardHovered: (id: string) => void;
   view: 'cities' | 'near-places-list';
 }
 
@@ -13,7 +13,7 @@ function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
   return (
     <article className={`${view}__card place-card`} onMouseEnter={() => {
       onCardHovered(offer.id);
-    }} onMouseLeave={() => onCardHovered(0)}
+    }} onMouseLeave={() => onCardHovered('')}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -22,7 +22,7 @@ function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
       )}
       <div className={`${view}__image-wrapper place-card__image-wrapper`}>
         <a href="#">
-          <img className="place-card__image" src={offer.photo} width="260" height="200" alt="Place image"></img>
+          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"></img>
         </a>
       </div>
       <div className="place-card__info">

@@ -1,22 +1,62 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {PARIS} from '../mocks/city-coords.ts';
-import {filterOffersByCity} from '../helpers.ts';
-import {offerCards} from '../mocks/offer-cards.ts';
-import {addOffers, changeCity} from './action.ts';
+import {filterOffersByCity, sortOffers} from '../helpers.ts';
+import {
+  addOffers,
+  changeCity,
+  changeSelectedOfferId,
+  changeSort,
+  requireAuthorization,
+  setOffersDataLoadingStatus
+} from './action.ts';
+import {City} from '../types/city.ts';
+import Offer from '../types/offer.ts';
+import {SortFilter} from '../types/sort-filter.ts';
+import {AuthorizationStatus} from '../enums.ts';
 
-const initialState = {
+type InitialState = {
+  city: City;
+  offersList: Offer[];
+  sortFilter: SortFilter;
+  selectedOfferId?: string;
+  offers: Offer[];
+  authorizationStatus: AuthorizationStatus;
+  offersDataLoadingStatus: boolean;
+}
+
+const initialState : InitialState = {
   city: PARIS,
-  offersList: filterOffersByCity(offerCards, PARIS)
+  sortFilter: {
+    filter: 'default'
+  },
+  offersList: [],
+  offers: [],
+  authorizationStatus: AuthorizationStatus.Unknown,
+  offersDataLoadingStatus: false,
 };
 
 const reducer = createReducer(
   initialState, (builder) => {
     builder.addCase(changeCity, (state, action) => {
-      state.city = action.payload.city;
-      state.offersList = filterOffersByCity(offerCards, state.city);
+      state.city = action.payload;
+      state.offersList = sortOffers(filterOffersByCity(state.offers, state.city), state.sortFilter);
     })
       .addCase(addOffers, (state, action) => {
-        state.offersList = action.payload.offers;
+        state.offers = action.payload;
+        state.offersList = sortOffers(filterOffersByCity(state.offers, state.city), state.sortFilter);
+      })
+      .addCase(changeSort, (state, action) => {
+        state.sortFilter = action.payload;
+        state.offersList = sortOffers(state.offersList, action.payload);
+      })
+      .addCase(changeSelectedOfferId, (state, action) => {
+        state.selectedOfferId = action.payload;
+      })
+      .addCase(requireAuthorization, (state, action) => {
+        state.authorizationStatus = action.payload;
+      })
+      .addCase(setOffersDataLoadingStatus, (state, action) => {
+        state.offersDataLoadingStatus = action.payload;
       });
   }
 );

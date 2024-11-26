@@ -1,15 +1,16 @@
-import {useState} from 'react';
 import OfferItem from './offer-item.tsx';
-import {useAppSelector} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import SortChoices from '../sort-choices/sort-choices.tsx';
+import {changeSelectedOfferId} from '../../store/action.ts';
 
 function OffersList(): JSX.Element {
   const offers = useAppSelector((state) => state.offersList);
   const city = useAppSelector((state) => state.city);
-  const [, setActiveOffer] = useState(0);
+  const dispatch = useAppDispatch();
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{offers.length} places to stay in {city.title}</b>
+      <b className="places__found">{offers.length} places to stay in {city.name}</b>
       <form className="places__sorting" action="#" method="get">
         <span className="places__sorting-caption">Sort by</span>
         <span className="places__sorting-type" tabIndex={0}>
@@ -18,17 +19,14 @@ function OffersList(): JSX.Element {
             <use xlinkHref="#icon-arrow-select"></use>
           </svg>
         </span>
-        <ul className="places__options places__options--custom places__options--opened">
-          <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-          <li className="places__option" tabIndex={0}>Price: low to high</li>
-          <li className="places__option" tabIndex={0}>Price: high to low</li>
-          <li className="places__option" tabIndex={0}>Top rated first</li>
-        </ul>
+        <SortChoices />
       </form>
       <div className="cities__places-list places__list tabs__content">
         {offers.map((offer) => (
-          <OfferItem offer={offer} key={offer.id} onCardHovered={(id) => setActiveOffer(id)}
-            view={'cities'}
+          <OfferItem offer={offer} key={offer.id} onCardHovered={
+            (id) => dispatch(changeSelectedOfferId(id))
+          }
+          view={'cities'}
           />
         ))}
       </div>

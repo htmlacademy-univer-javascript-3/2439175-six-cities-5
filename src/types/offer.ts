@@ -1,16 +1,16 @@
 import {OfferType} from '../enums/offer-type.ts';
-import Coords from './hotel-coords.ts';
 import {City} from './city.ts';
+import {Location} from './location.ts';
 
 type Offer = {
   title: string;
   isPremium: boolean;
-  photo: string;
+  previewImage: string;
   rating: number;
   type: OfferType;
-  id: number;
+  id: string;
   price: number;
-  coordinates: Coords;
+  location: Location;
   city: City;
   isFavourite: boolean;
 }
