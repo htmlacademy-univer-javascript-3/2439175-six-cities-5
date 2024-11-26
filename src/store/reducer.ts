@@ -2,17 +2,18 @@ import {createReducer} from '@reduxjs/toolkit';
 import {PARIS} from '../mocks/city-coords.ts';
 import {filterOffersByCity, sortOffers} from '../helpers.ts';
 import {
-  addOffers,
+  addOffers, addUser,
   changeCity,
   changeSelectedOfferId,
   changeSort,
-  requireAuthorization,
+  requireAuthorization, setError,
   setOffersDataLoadingStatus
 } from './action.ts';
 import {City} from '../types/city.ts';
 import Offer from '../types/offer.ts';
 import {SortFilter} from '../types/sort-filter.ts';
 import {AuthorizationStatus} from '../enums.ts';
+import {UserInfo} from '../types/user-info.ts';
 
 type InitialState = {
   city: City;
@@ -22,6 +23,8 @@ type InitialState = {
   offers: Offer[];
   authorizationStatus: AuthorizationStatus;
   offersDataLoadingStatus: boolean;
+  error: string | null;
+  userInfo: UserInfo | null;
 }
 
 const initialState : InitialState = {
@@ -33,6 +36,8 @@ const initialState : InitialState = {
   offers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   offersDataLoadingStatus: false,
+  error: null,
+  userInfo: null,
 };
 
 const reducer = createReducer(
@@ -47,7 +52,7 @@ const reducer = createReducer(
       })
       .addCase(changeSort, (state, action) => {
         state.sortFilter = action.payload;
-        state.offersList = sortOffers(state.offersList, action.payload);
+        state.offersList = sortOffers(filterOffersByCity(state.offers, state.city), action.payload);
       })
       .addCase(changeSelectedOfferId, (state, action) => {
         state.selectedOfferId = action.payload;
@@ -57,6 +62,12 @@ const reducer = createReducer(
       })
       .addCase(setOffersDataLoadingStatus, (state, action) => {
         state.offersDataLoadingStatus = action.payload;
+      })
+      .addCase(setError, (state, action) => {
+        state.error = action.payload;
+      })
+      .addCase(addUser, (state, action) => {
+        state.userInfo = action.payload;
       });
   }
 );

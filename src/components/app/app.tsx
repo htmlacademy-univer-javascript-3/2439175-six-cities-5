@@ -13,10 +13,10 @@ import {useAppSelector} from '../../hooks';
 import {Spinner} from '../../pages/spinner/spinner.tsx';
 
 function App(): JSX.Element {
-  const authorizationStatus = AuthorizationStatus.NoAuth;
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const dataOffersLoadingStatus = useAppSelector((state) => state.offersDataLoadingStatus);
 
-  if (dataOffersLoadingStatus) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || dataOffersLoadingStatus) {
     return (
       <Spinner />
     );
@@ -31,7 +31,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<Login />}
+          element={authorizationStatus === AuthorizationStatus.Auth ? <Main cities={CITIES} /> : <Login /> }
         />
         <Route
           path={AppRoute.Favorites}
