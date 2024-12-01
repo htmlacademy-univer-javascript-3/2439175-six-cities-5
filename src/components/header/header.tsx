@@ -1,27 +1,11 @@
 import Logo from '../logo/logo.tsx';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../enums.ts';
-import {Link} from 'react-router-dom';
-import {logoutAction} from '../../store/api-actions.ts';
+import {LoginButton} from '../login-button/login-button.tsx';
 
 export function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
-  const dispatch = useAppDispatch();
-  const signButton = !isAuthorized ? (
-    <Link to={'/login'}>
-      <span className="header__signout">Sign in</span>
-    </Link>
-  ) : (
-    <a className="header__nav-link" href="#">
-      <span className="header__signout" onClick={(evt) => {
-        evt.preventDefault();
-        dispatch(logoutAction());
-      }}
-      >Sign out
-      </span>
-    </a>
-  );
   const userInfo = useAppSelector((state) => state.userInfo);
   return (
     <header className="header">
@@ -42,7 +26,7 @@ export function Header(): JSX.Element {
                   </a>
                 </li>}
               <li className="header__nav-item">
-                {signButton}
+                <LoginButton/>
               </li>
             </ul>
           </nav>

@@ -1,12 +1,9 @@
-import {City} from '../../types/city.ts';
 import {useAppDispatch} from '../../hooks';
 import {changeCity} from '../../store/action.ts';
+import {CITIES} from '../../mocks/city-coords.ts';
 
-type CitiesListProps = {
-  cities: City[];
-}
-
-function CitiesList({cities}: CitiesListProps): JSX.Element {
+function CitiesList(): JSX.Element {
+  const cities = CITIES;
   const dispatch = useAppDispatch();
   return (
     <section className="locations container">

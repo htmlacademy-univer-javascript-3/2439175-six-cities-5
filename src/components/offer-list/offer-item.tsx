@@ -1,19 +1,21 @@
 import Offer from '../../types/offer.ts';
 import {Link} from 'react-router-dom';
 import {convertRatingToWidth} from '../../helpers.ts';
+import {OfferItemView} from '../../types/offer-item-view.ts';
 
 type OfferItemProps = {
   offer: Offer;
-  onCardHovered: (id: string) => void;
-  view: 'cities' | 'near-places-list';
+  onCardHovered?: (id: string) => void;
+  view: OfferItemView;
 }
 
 function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
   const bookMarkClasses = `place-card__bookmark-button ${offer.isFavourite && 'place-card__bookmark-button--active'} button`;
   return (
-    <article className={`${view}__card place-card`} onMouseEnter={() => {
-      onCardHovered(offer.id);
-    }} onMouseLeave={() => onCardHovered('')}
+    <article className={`${view}__card place-card`}
+      onMouseEnter={
+        onCardHovered && (() => onCardHovered(offer.id))
+      } onMouseLeave={onCardHovered && (() => onCardHovered(''))}
     >
       {offer.isPremium && (
         <div className="place-card__mark">

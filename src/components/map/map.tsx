@@ -1,11 +1,11 @@
 import 'leaflet/dist/leaflet.css';
 import {useEffect, useRef} from 'react';
 import {Icon, layerGroup, Marker} from 'leaflet';
-import {City} from '../../types/city.ts';
 import useMap from './use-map.tsx';
-import Offer from '../../types/offer.ts';
 import {CURRENT_MAP_ICON, DEFAULT_MAP_ICON} from '../../consts/map-icon-consts.ts';
 import {useAppSelector} from '../../hooks';
+import {MapView} from '../../types/map-view.ts';
+import {getFilteredOffers} from '../../store/selectors.ts';
 
 const defaultCustomIcon = new Icon({
   iconUrl: DEFAULT_MAP_ICON,
@@ -20,13 +20,14 @@ const currentCustomIcon = new Icon({
 });
 
 export type MapProps = {
-  city: City;
-  offers: Offer[];
-  view: 'offer' | 'cities';
+  view: MapView;
 };
 
-export default function Map(props: MapProps) {
-  const {city, offers} = props;
+export default function Map({view}: MapProps) {
+  const city = useAppSelector((state) => state.city);
+  const offers = useAppSelector(getFilteredOffers);
+  const nearestOffers = useAppSelector((state) => state.nearestOffers);
+  const offersToDraw = view === 'cities' ? offers : nearestOffers;
   const selectedOfferId = useAppSelector((state) => state.selectedOfferId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -34,7 +35,7 @@ export default function Map(props: MapProps) {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
-      offers.forEach((hotel) => {
+      offersToDraw.forEach((hotel) => {
         const marker = new Marker({
           lat: hotel.location.latitude,
           lng: hotel.location.longitude
@@ -53,7 +54,7 @@ export default function Map(props: MapProps) {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOfferId]);
+  }, [map, offersToDraw, selectedOfferId]);
 
-  return <section className={`${props.view}__map`} ref={mapRef}></section>;
+  return <section className={`${view}__map`} ref={mapRef}></section>;
 }

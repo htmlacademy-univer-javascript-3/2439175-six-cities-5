@@ -8,13 +8,9 @@ type DetailMessageType = {
   message: string;
 }
 
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: false,
-  [StatusCodes.NOT_FOUND]: true
-};
+const StatusCodeMapping = new Set<number>([StatusCodes.BAD_REQUEST]);
 
-const shouldDisplayError = (response: AxiosResponse) => StatusCodeMapping[response.status];
+const shouldDisplayError = (response: AxiosResponse) => StatusCodeMapping.has(response.status);
 
 const BACKEND_URL = 'https://14.design.htmlacademy.pro/six-cities';
 const REQUEST_TIMEOUT = 5000;

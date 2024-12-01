@@ -1,5 +1,5 @@
 type Host = {
-  avatar: string;
+  avatarUrl: string;
   name: string;
   isPro: boolean;
 }

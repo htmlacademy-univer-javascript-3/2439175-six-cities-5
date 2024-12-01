@@ -6,14 +6,16 @@ export function convertRatingToWidth(rating: number): string {
   return `${rating * 20}%`;
 }
 
-export function getMonthAndYear(date: Date): string {
+export function getMonthAndYear(dt: Date): string {
+  const date = new Date(dt);
   return date.toLocaleString('en-US', {
     month: 'long',
     year: 'numeric'
   });
 }
 
-export function formatDateToYMD(date: Date): string {
+export function formatDateToYMD(dt: Date): string {
+  const date = new Date(dt);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
