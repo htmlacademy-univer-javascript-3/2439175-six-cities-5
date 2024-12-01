@@ -2,9 +2,10 @@ import OfferItem from './offer-item.tsx';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import SortChoices from '../sort-choices/sort-choices.tsx';
 import {changeSelectedOfferId} from '../../store/action.ts';
+import {getSortedOffers} from '../../store/selectors.ts';
 
 function OffersList(): JSX.Element {
-  const offers = useAppSelector((state) => state.offersList);
+  const offers = useAppSelector(getSortedOffers);
   const city = useAppSelector((state) => state.city);
   const dispatch = useAppDispatch();
   return (

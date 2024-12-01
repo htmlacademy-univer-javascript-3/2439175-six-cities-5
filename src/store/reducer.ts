@@ -1,7 +1,8 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {PARIS} from '../mocks/city-coords.ts';
-import {filterOffersByCity, sortOffers} from '../helpers.ts';
 import {
+  addComments, addNearestOffers,
+  addOffer,
   addOffers, addUser,
   changeCity,
   changeSelectedOfferId,
@@ -14,17 +15,21 @@ import Offer from '../types/offer.ts';
 import {SortFilter} from '../types/sort-filter.ts';
 import {AuthorizationStatus} from '../enums.ts';
 import {UserInfo} from '../types/user-info.ts';
+import {OfferDetailed} from '../types/offer-detailed.ts';
+import Comment from '../types/comment.ts';
 
-type InitialState = {
+export type InitialState = {
   city: City;
   offersList: Offer[];
   sortFilter: SortFilter;
   selectedOfferId?: string;
-  offers: Offer[];
   authorizationStatus: AuthorizationStatus;
   offersDataLoadingStatus: boolean;
   error: string | null;
   userInfo: UserInfo | null;
+  offer: OfferDetailed | null;
+  comments: Comment[];
+  nearestOffers: Offer[];
 }
 
 const initialState : InitialState = {
@@ -33,26 +38,25 @@ const initialState : InitialState = {
     filter: 'default'
   },
   offersList: [],
-  offers: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   offersDataLoadingStatus: false,
   error: null,
   userInfo: null,
+  offer: null,
+  comments: [],
+  nearestOffers: [],
 };
 
 const reducer = createReducer(
   initialState, (builder) => {
     builder.addCase(changeCity, (state, action) => {
       state.city = action.payload;
-      state.offersList = sortOffers(filterOffersByCity(state.offers, state.city), state.sortFilter);
     })
       .addCase(addOffers, (state, action) => {
-        state.offers = action.payload;
-        state.offersList = sortOffers(filterOffersByCity(state.offers, state.city), state.sortFilter);
+        state.offersList = action.payload;
       })
       .addCase(changeSort, (state, action) => {
         state.sortFilter = action.payload;
-        state.offersList = sortOffers(filterOffersByCity(state.offers, state.city), action.payload);
       })
       .addCase(changeSelectedOfferId, (state, action) => {
         state.selectedOfferId = action.payload;
@@ -68,6 +72,15 @@ const reducer = createReducer(
       })
       .addCase(addUser, (state, action) => {
         state.userInfo = action.payload;
+      })
+      .addCase(addOffer, (state, action) => {
+        state.offer = action.payload;
+      })
+      .addCase(addComments, (state, action) => {
+        state.comments = action.payload;
+      })
+      .addCase(addNearestOffers, (state, action) => {
+        state.nearestOffers = action.payload;
       });
   }
 );
