@@ -1,6 +1,6 @@
 import Offer from '../types/offer.ts';
 import {Link} from 'react-router-dom';
-import {Header} from '../components/header/header.tsx';
+import {Header} from "../components/header/header.tsx";
 
 type FavoritesProps = {
   offers: Offer[];

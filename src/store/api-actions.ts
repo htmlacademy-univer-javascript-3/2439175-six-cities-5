@@ -176,7 +176,8 @@ export const changeFavourites = createAsyncThunk<void, {offerId: string | undefi
         dispatch(deleteFromFavorites(data));
       }
     } catch (e) {
-      if (e.status === 401) {
+      const error = e as { status: number };
+      if (error.status === 401) {
         dispatch(redirectToRoute(AppRoute.Login));
       }
     }
