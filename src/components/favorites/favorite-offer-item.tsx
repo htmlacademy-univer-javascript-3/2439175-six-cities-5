@@ -1,56 +1,47 @@
 import Offer from '../../types/offer.ts';
-import {Link, useNavigate} from 'react-router-dom';
 import {convertRatingToWidth} from '../../helpers.ts';
-import {OfferItemView} from '../../types/offer-item-view.ts';
+import {Link} from 'react-router-dom';
 import {changeFavourites} from '../../store/api-actions.ts';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus, Reducers} from '../../enums.ts';
+import {useAppDispatch} from '../../hooks';
 
-type OfferItemProps = {
+export type FavoriteOfferItemProps = {
   offer: Offer;
-  onCardHovered?: (id: string) => void;
-  view: OfferItemView;
 }
 
-function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
+export function FavoriteOfferItem({offer}: FavoriteOfferItemProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const authStatus = useAppSelector((state) => state[Reducers.Auth].status);
   const changeFavouriteStatus = () => {
-    if (authStatus !== AuthorizationStatus.Auth) {
-      navigate(AppRoute.Login);
-    }
-
     dispatch(changeFavourites({offerId: offer.id, status: offer.isFavorite ? 0 : 1}));
   };
-  const bookMarkClasses = `place-card__bookmark-button ${offer.isFavorite && 'place-card__bookmark-button--active'} button`;
   return (
-    <article className={`${view}__card place-card`}
-      onMouseEnter={
-        onCardHovered && (() => onCardHovered(offer.id))
-      } onMouseLeave={onCardHovered && (() => onCardHovered(''))}
-    >
+    <article className="favorites__card place-card" key={offer.id}>
       {offer.isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div className={`${view}__image-wrapper place-card__image-wrapper`}>
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <a href="#">
-          <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt="Place image"></img>
+          <img className="place-card__image" src={offer.previewImage} width="150"
+            height="110"
+            alt="Place image"
+          />
         </a>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={bookMarkClasses} type="button" onClick={changeFavouriteStatus}>
+          <button
+            className="place-card__bookmark-button place-card__bookmark-button--active button"
+            type="button" onClick={() => changeFavouriteStatus()}
+          >
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">In bookmarks</span>
           </button>
         </div>
         <div className="place-card__rating rating">
@@ -61,7 +52,7 @@ function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
         </div>
         <Link to={`/offer/${offer.id}`}>
           <h2 className="place-card__name">
-            <span>{offer.title}</span>
+            <a>{offer.title}</a>
           </h2>
         </Link>
         <p className="place-card__type">{offer.type}</p>
@@ -69,5 +60,3 @@ function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
     </article>
   );
 }
-
-export default OfferItem;

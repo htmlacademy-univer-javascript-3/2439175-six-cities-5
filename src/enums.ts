@@ -17,3 +17,9 @@ export enum APIRoute {
   Logout = '/logout',
   Favorite = '/favorite',
 }
+
+export enum Reducers {
+  Auth = 'authReducer',
+  Offer = 'offerReducer',
+  Main = 'mainReducer',
+}

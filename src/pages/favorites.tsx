@@ -1,74 +1,24 @@
-import Offer from '../types/offer.ts';
-import {Link} from 'react-router-dom';
 import {Header} from '../components/header/header.tsx';
+import {useAppSelector} from '../hooks';
+import FavoritesEmpty from './favorites-empty.tsx';
+import {CITIES} from '../mocks/city-coords.ts';
+import {filterOffersByCity} from '../helpers.ts';
+import {Footer} from '../components/footer/footer.tsx';
+import {FavoritesOffersByCity} from '../components/favorites/favorites-by-city.tsx';
+import {AppRoute, AuthorizationStatus, Reducers} from '../enums.ts';
+import {Navigate} from 'react-router-dom';
 
-type FavoritesProps = {
-  offers: Offer[];
-}
+function Favorites(): JSX.Element {
+  const authStatus = useAppSelector((state) => state[Reducers.Auth].status);
+  const favorites = useAppSelector((state) => state[Reducers.Main].favoriteOffers);
+  if (favorites.length === 0) {
+    return <FavoritesEmpty />;
+  }
 
-type FavoriteProps = {
-  offer: Offer;
-}
+  if (authStatus !== AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Login} />;
+  }
 
-function FavoriteCard({offer}: FavoriteProps): JSX.Element {
-  return (
-    <article className="favorites__card place-card" >
-      {offer.isPremium && (
-        <div className="place-card__mark">
-          <span>Premium</span>
-        </div>
-      )}
-      <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={offer.previewImage} width="150" height="110"
-            alt="Place image"
-          >
-          </img>
-        </a>
-      </div>
-      <div className="favorites__card-info place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-          <button className="place-card__bookmark-button place-card__bookmark-button--active button"
-            type="button"
-          >
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">In bookmarks</span>
-          </button>
-        </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: `${offer.rating * 20}%`}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <Link className="place-card__name" to={`/offer/${offer.id}`}>
-          <h2>
-            {offer.title}
-          </h2>
-        </Link>
-        <p className="place-card__type">{offer.type}</p>
-      </div>
-    </article>
-  );
-}
-
-function FavoriteCardsList({offers}: FavoritesProps): JSX.Element {
-  return (
-    <div className="favorites__places">
-      {offers.map((offer) => (
-        <FavoriteCard offer={offer} key={offer.id} />
-      ))}
-    </div>
-  );
-}
-
-function Favorites({offers}: FavoritesProps): JSX.Element {
   return (
     <div className="page">
       <Header />
@@ -78,36 +28,17 @@ function Favorites({offers}: FavoritesProps): JSX.Element {
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
             <ul className="favorites__list">
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Amsterdam</span>
-                    </a>
-                  </div>
-                </div>
-                <FavoriteCardsList offers={offers}/>
-              </li>
-
-              <li className="favorites__locations-items">
-                <div className="favorites__locations locations locations--current">
-                  <div className="locations__item">
-                    <a className="locations__item-link" href="#">
-                      <span>Cologne</span>
-                    </a>
-                  </div>
-                </div>
-                <FavoriteCardsList offers={offers}/>
-              </li>
+              {CITIES.map((city) => {
+                const filteredByCurrentCity = filterOffersByCity(favorites, city);
+                if (filteredByCurrentCity.length !== 0) {
+                  return (<FavoritesOffersByCity offers={filteredByCurrentCity} city={city} key={city.name} />);
+                }
+              })}
             </ul>
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"></img>
-        </a>
-      </footer>
+      <Footer/>
     </div>
   );
 }

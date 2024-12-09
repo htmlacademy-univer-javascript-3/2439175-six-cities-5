@@ -1,10 +1,11 @@
 import {filterOffersByCity, sortOffers} from '../helpers.ts';
 import {createSelector} from '@reduxjs/toolkit';
-import {InitialState} from './reducer.ts';
+import {reducer} from './reducer.ts';
+import {Reducers} from '../enums.ts';
 
-const getOffersList = (state: InitialState) => state.offersList;
-const getCity = (state: InitialState) => state.city;
-const getSortFilter = (state: InitialState) => state.sortFilter;
+const getOffersList = (state: ReturnType<typeof reducer>) => state[Reducers.Main].offersList;
+const getCity = (state: ReturnType<typeof reducer>) => state[Reducers.Main].city;
+const getSortFilter = (state: ReturnType<typeof reducer>) => state[Reducers.Main].sortFilter;
 
 export const getSortedOffers = createSelector(
   [getOffersList, getCity, getSortFilter],
