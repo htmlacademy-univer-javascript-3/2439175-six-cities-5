@@ -1,6 +1,6 @@
 import {FormEvent} from 'react';
 import {useAppDispatch} from '../../hooks';
-import {loginAction} from '../../store/api-actions.ts';
+import {fetchFavorites, loginAction} from '../../store/api-actions.ts';
 
 export function LoginForm(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -14,7 +14,10 @@ export function LoginForm(): JSX.Element {
       dispatch(loginAction({
         email: email.toString(),
         password: password.toString(),
-      }));
+      }))
+        .then(() => {
+          dispatch(fetchFavorites());
+        });
     }
   };
   return (

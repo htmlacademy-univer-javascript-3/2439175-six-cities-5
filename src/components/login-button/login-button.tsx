@@ -1,10 +1,10 @@
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AuthorizationStatus} from '../../enums.ts';
+import {AuthorizationStatus, Reducers} from '../../enums.ts';
 import {Link} from 'react-router-dom';
 import {logoutAction} from '../../store/api-actions.ts';
 
 export function LoginButton(): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[Reducers.Auth].status);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const dispatch = useAppDispatch();
   if (!isAuthorized) {

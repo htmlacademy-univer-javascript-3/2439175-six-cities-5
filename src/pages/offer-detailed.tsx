@@ -9,7 +9,7 @@ import {convertRatingToWidth} from '../helpers.ts';
 import {changeFavourites, fetchComments, fetchOfferAction, fetchOffersNearby} from '../store/api-actions.ts';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {AuthorizationStatus} from '../enums.ts';
+import {AuthorizationStatus, Reducers} from '../enums.ts';
 import {Spinner} from './spinner/spinner.tsx';
 
 function OfferDetailed(): JSX.Element {
@@ -20,9 +20,9 @@ function OfferDetailed(): JSX.Element {
     dispatch(fetchComments({offerId}));
     dispatch(fetchOffersNearby({offerId}));
   }, [offerId, dispatch]);
-  const offer = useAppSelector((state) => state.offer);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const isOfferPageLoading = useAppSelector((state) => state.offerDataLoadingStatus);
+  const offer = useAppSelector((state) => state[Reducers.Offer].offer);
+  const authorizationStatus = useAppSelector((state) => state[Reducers.Auth].status);
+  const isOfferPageLoading = useAppSelector((state) => state[Reducers.Offer].isLoading);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   if (isOfferPageLoading) {
     return <Spinner />;

@@ -1,8 +1,11 @@
 import {store} from '../store';
 import {setError} from '../store/action';
-import {clearErrorAction} from '../store/api-actions';
+import {TIMEOUT_SHOW_ERROR} from '../consts/integer-consts.ts';
 
 export const processErrorHandle = (message: string): void => {
   store.dispatch(setError(message));
-  store.dispatch(clearErrorAction());
+  setTimeout(
+    () => store.dispatch(setError(null)),
+    TIMEOUT_SHOW_ERROR,
+  );
 };

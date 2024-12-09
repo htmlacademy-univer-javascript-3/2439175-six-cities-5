@@ -1,5 +1,5 @@
 import {useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus} from '../../enums.ts';
+import {AppRoute, AuthorizationStatus, Reducers} from '../../enums.ts';
 import {Navigate} from 'react-router-dom';
 
 type PublicOnlyRouteProps = {
@@ -7,7 +7,7 @@ type PublicOnlyRouteProps = {
 }
 
 export function PublicOnlyRoute({children}: PublicOnlyRouteProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector((state) => state[Reducers.Auth].status);
   return (
     authorizationStatus !== AuthorizationStatus.Auth ? children : <Navigate to={AppRoute.Root} />
   );

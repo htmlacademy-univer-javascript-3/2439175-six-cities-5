@@ -6,6 +6,7 @@ import {CURRENT_MAP_ICON, DEFAULT_MAP_ICON} from '../../consts/map-icon-consts.t
 import {useAppSelector} from '../../hooks';
 import {MapView} from '../../types/map-view.ts';
 import {getFilteredOffers} from '../../store/selectors.ts';
+import {Reducers} from '../../enums.ts';
 
 const defaultCustomIcon = new Icon({
   iconUrl: DEFAULT_MAP_ICON,
@@ -24,11 +25,11 @@ export type MapProps = {
 };
 
 export default function Map({view}: MapProps) {
-  const city = useAppSelector((state) => state.city);
+  const city = useAppSelector((state) => state[Reducers.Main].city);
   const offers = useAppSelector(getFilteredOffers);
-  const nearestOffers = useAppSelector((state) => state.nearestOffers);
+  const nearestOffers = useAppSelector((state) => state[Reducers.Offer].offersNearby);
   const offersToDraw = view === 'cities' ? offers : nearestOffers;
-  const selectedOfferId = useAppSelector((state) => state.selectedOfferId);
+  const selectedOfferId = useAppSelector((state) => state[Reducers.Main].selectedOfferId);
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 

@@ -1,11 +1,12 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
-import {StarsDescription} from '../../const-components.ts';
 import {useParams} from 'react-router-dom';
 import {addComment} from '../../store/api-actions.ts';
 import {useAppDispatch} from '../../hooks';
+import {RatingStar} from '../rating-star/rating-star.tsx';
 
 function SendComment(): JSX.Element {
   const [formState, setFormState] = useState({rating: '', review: ''});
+  const [isDisabled, setIsDisabled] = useState(false);
   const {offerId} = useParams();
   const dispatch = useAppDispatch();
 
@@ -26,7 +27,9 @@ function SendComment(): JSX.Element {
           rating: +rating,
           comment: comment.toString()
         }
-      }));
+      })).then(() => {
+        setIsDisabled(true);
+      });
     }
   };
 
@@ -37,19 +40,7 @@ function SendComment(): JSX.Element {
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {Array.from({ length: 5 }, (_, index) => 5 - index).map((n) => (
-          <>
-            <input className="form__rating-input visually-hidden" name="rating" value={`${n}`} id={`${n}-stars`}
-              type="radio" onChange={handleChange}
-            >
-            </input>
-            <label htmlFor={`${n}-stars`} className="reviews__rating-label form__rating-label"
-              title={StarsDescription[n]}
-            >
-              <svg className="form__star-image" width="37" height="33">
-                <use xlinkHref="#icon-star"></use>
-              </svg>
-            </label>
-          </>
+          <RatingStar rating={n} handleChange={handleChange} key={n}/>
         ))}
       </div>
       <textarea className="reviews__textarea form__textarea" id="review" name="review" value={formState.review}
@@ -61,7 +52,9 @@ function SendComment(): JSX.Element {
           To submit review please make sure to set <span className="reviews__star">rating</span> and
           describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit
+        <button className="reviews__submit form__submit button" type="submit"
+          disabled={isDisabled}
+        >Submit
         </button>
       </div>
     </form>
