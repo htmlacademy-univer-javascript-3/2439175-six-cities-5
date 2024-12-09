@@ -12,7 +12,7 @@ type Offer = {
   price: number;
   location: Location;
   city: City;
-  isFavourite: boolean;
+  isFavorite: boolean;
 }
 
 export default Offer;

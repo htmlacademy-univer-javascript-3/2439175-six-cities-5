@@ -48,3 +48,7 @@ export function sortOffers(offers: Offer[], sortFilter: SortFilter): Offer[] {
       return offers;
   }
 }
+
+export function filterFavoriteOffers(offers: Offer[]): Offer[] {
+  return offers.filter((offer) => offer.isFavourite);
+}

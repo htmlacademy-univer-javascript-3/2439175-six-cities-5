@@ -4,9 +4,15 @@ import {useAppSelector} from '../hooks';
 import Map from '../components/map/map.tsx';
 import {Header} from '../components/header/header.tsx';
 import {getFilteredOffers} from '../store/selectors.ts';
+import MainEmpty from './main-empty.tsx';
 
 function Main(): JSX.Element {
   const offers = useAppSelector(getFilteredOffers);
+  if (!offers) {
+    return (
+      <MainEmpty />
+    );
+  }
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -19,7 +25,7 @@ function Main(): JSX.Element {
           <div className="cities__places-container container">
             <OffersList />
             <div className="cities__right-section">
-              <Map offers={offers} view='cities' />
+              <Map view='cities' />
             </div>
           </div>
         </div>

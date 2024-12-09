@@ -2,31 +2,40 @@ import SendComment from '../components/comment/send-comment.tsx';
 import {ReviewList} from '../components/review-list/review-list.tsx';
 import NearPlacesList from '../components/near-places-list/near-places-list.tsx';
 import Map from '../components/map/map.tsx';
-import {useAppSelector} from '../hooks';
+import {useAppDispatch, useAppSelector} from '../hooks';
 import {Header} from '../components/header/header.tsx';
 import NotFound from './not-found.tsx';
 import {convertRatingToWidth} from '../helpers.ts';
-import {fetchComments, fetchOfferAction, fetchOffersNearby} from '../store/api-actions.ts';
-import {store} from '../store';
+import {changeFavourites, fetchComments, fetchOfferAction, fetchOffersNearby} from '../store/api-actions.ts';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {AuthorizationStatus} from '../enums.ts';
+import {Spinner} from './spinner/spinner.tsx';
 
 function OfferDetailed(): JSX.Element {
   const {offerId} = useParams();
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    store.dispatch(fetchOfferAction({offerId}));
-    store.dispatch(fetchComments({offerId}));
-    store.dispatch(fetchOffersNearby({offerId}));
-  }, [offerId]);
+    dispatch(fetchOfferAction({offerId}));
+    dispatch(fetchComments({offerId}));
+    dispatch(fetchOffersNearby({offerId}));
+  }, [offerId, dispatch]);
   const offer = useAppSelector((state) => state.offer);
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const isOfferPageLoading = useAppSelector((state) => state.offerDataLoadingStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
+  if (isOfferPageLoading) {
+    return <Spinner />;
+  }
   if (offer === null) {
     return (
       <NotFound />
     );
   }
+  const changeFavouriteStatus = () => {
+    dispatch(changeFavourites({offerId: offer.id, status: offer.isFavorite ? 0 : 1}));
+  };
+  const bookMarkClasses = `offer__bookmark-button ${offer.isFavorite && 'offer__bookmark-button--active'} button`;
   return (
     <div className="page">
       <Header />
@@ -53,7 +62,7 @@ function OfferDetailed(): JSX.Element {
                 <h1 className="offer__name">
                   {offer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={bookMarkClasses} type="button" onClick={changeFavouriteStatus}>
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
