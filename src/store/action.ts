@@ -2,8 +2,10 @@ import {createAction} from '@reduxjs/toolkit';
 import Offer from '../types/offer.ts';
 import {City} from '../types/city.ts';
 import {SortFilter} from '../types/sort-filter.ts';
-import {AuthorizationStatus} from '../enums.ts';
+import {AppRoute, AuthorizationStatus} from '../enums.ts';
 import {UserInfo} from '../types/user-info.ts';
+import {OfferDetailed} from '../types/offer-detailed.ts';
+import Comment from '../types/comment.ts';
 
 export const changeCity = createAction<City>('user/changeCity');
 
@@ -20,3 +22,23 @@ export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersD
 export const setError = createAction<string | null>('data/setError');
 
 export const addUser = createAction<UserInfo | null>('server/addUser');
+
+export const addOffer = createAction<OfferDetailed | null>('server/addOffer');
+
+export const addComments = createAction<Comment[]>('server/addComments');
+
+export const addNearestOffers = createAction<Offer[]>('server/addNearestOffers');
+
+export const redirectBack = createAction('server/redirectBack');
+
+export const updateFavourites = createAction<Offer[]>('server/updateFavourites');
+
+export const addNewComment = createAction<Comment>('server/addComment');
+
+export const addToFavorites = createAction<Offer>('server/addToFavorites');
+
+export const deleteFromFavorites = createAction<Offer>('server/deleteFromFavorites');
+
+export const setOfferDataLoadingStatus = createAction<boolean>('data/setOfferDataLoadingStatus');
+
+export const redirectToRoute = createAction<AppRoute>('server/redirectToRoute');

@@ -17,7 +17,7 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: AMSTERDAM,
-    isFavourite: false,
+    isFavorite: false,
   },
   {
     id: '2',
@@ -33,7 +33,7 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: PARIS,
-    isFavourite: true,
+    isFavorite: true,
   },
   {
     id: '3',
@@ -49,7 +49,7 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: COLOGNE,
-    isFavourite: false,
+    isFavorite: false,
   },
   {
     id: '4',
@@ -65,7 +65,7 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: BRUSSELS,
-    isFavourite: false,
+    isFavorite: false,
   },
   {
     id: '5',
@@ -81,7 +81,7 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: HAMBURG,
-    isFavourite: false,
+    isFavorite: false,
   },
   {
     id: '6',
@@ -97,7 +97,7 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: DUSSELDORF,
-    isFavourite: false,
+    isFavorite: false,
   },
   {
     id: '7',
@@ -113,6 +113,6 @@ export const offerCards : Offer[] = [
       zoom: 8,
     },
     city: AMSTERDAM,
-    isFavourite: false,
+    isFavorite: false,
   },
 ];

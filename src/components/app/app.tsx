@@ -1,16 +1,17 @@
 import Main from '../../pages/main';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import NotFound from '../../pages/not-found.tsx';
 import Login from '../../pages/login';
 import {AppRoute, AuthorizationStatus} from '../../enums.ts';
 import PrivateRoute from '../private-route/private-route';
 import Favorites from '../../pages/favorites';
 import OfferDetailed from '../../pages/offer-detailed.tsx';
-import {review} from '../../mocks/review.ts';
 import {offerCards} from '../../mocks/offer-cards.ts';
-import {CITIES} from '../../mocks/city-coords.ts';
 import {useAppSelector} from '../../hooks';
 import {Spinner} from '../../pages/spinner/spinner.tsx';
+import {PublicOnlyRoute} from '../public-only-route/public-only-route.tsx';
+import HistoryRouter from '../history-route/history-route.tsx';
+import browserHistory from '../../browser-history.ts';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -23,30 +24,30 @@ function App(): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<Main cities={CITIES} /> }
+          element={<Main /> }
         />
         <Route
           path={AppRoute.Login}
-          element={authorizationStatus === AuthorizationStatus.Auth ? <Main cities={CITIES} /> : <Login /> }
+          element={<PublicOnlyRoute><Login /></PublicOnlyRoute>}
         />
         <Route
           path={AppRoute.Favorites}
-          element={<PrivateRoute authorizationStatus={authorizationStatus}><Favorites offers={offerCards}/></PrivateRoute> }
+          element={<PrivateRoute><Favorites offers={offerCards}/></PrivateRoute> }
         />
         <Route
           path={AppRoute.OfferWithId}
-          element={<OfferDetailed reviews={[review]} nearestHotels={offerCards.slice(1)}/>}
+          element={<OfferDetailed />}
         />
         <Route
           path={'*'}
           element={<NotFound />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

@@ -1,19 +1,27 @@
 import Offer from '../../types/offer.ts';
 import {Link} from 'react-router-dom';
 import {convertRatingToWidth} from '../../helpers.ts';
+import {OfferItemView} from '../../types/offer-item-view.ts';
+import {changeFavourites} from '../../store/api-actions.ts';
+import {useAppDispatch} from '../../hooks';
 
 type OfferItemProps = {
   offer: Offer;
-  onCardHovered: (id: string) => void;
-  view: 'cities' | 'near-places-list';
+  onCardHovered?: (id: string) => void;
+  view: OfferItemView;
 }
 
 function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
-  const bookMarkClasses = `place-card__bookmark-button ${offer.isFavourite && 'place-card__bookmark-button--active'} button`;
+  const dispatch = useAppDispatch();
+  const changeFavouriteStatus = () => {
+    dispatch(changeFavourites({offerId: offer.id, status: offer.isFavorite ? 0 : 1}));
+  };
+  const bookMarkClasses = `place-card__bookmark-button ${offer.isFavorite && 'place-card__bookmark-button--active'} button`;
   return (
-    <article className={`${view}__card place-card`} onMouseEnter={() => {
-      onCardHovered(offer.id);
-    }} onMouseLeave={() => onCardHovered('')}
+    <article className={`${view}__card place-card`}
+      onMouseEnter={
+        onCardHovered && (() => onCardHovered(offer.id))
+      } onMouseLeave={onCardHovered && (() => onCardHovered(''))}
     >
       {offer.isPremium && (
         <div className="place-card__mark">
@@ -31,7 +39,7 @@ function OfferItem({offer, onCardHovered, view}: OfferItemProps): JSX.Element {
             <b className="place-card__price-value">&euro;{offer.price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className={bookMarkClasses} type="button">
+          <button className={bookMarkClasses} type="button" onClick={changeFavouriteStatus}>
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>

@@ -1,19 +1,13 @@
 import Offer from '../../types/offer.ts';
 import OfferItem from '../offer-list/offer-item.tsx';
-import {useAppDispatch} from '../../hooks';
-import {changeSelectedOfferId} from '../../store/action.ts';
+import {useAppSelector} from '../../hooks';
 
-type NearPlacesListProps = {
-  offers: Offer[];
-}
-
-function NearPlacesList({offers}: NearPlacesListProps): JSX.Element {
-  const dispatcher = useAppDispatch();
+function NearPlacesList(): JSX.Element {
+  const nearestOffers = useAppSelector((state) => state.nearestOffers);
   return (
     <div className="near-places__list places__list">
-      {offers.map((offer: Offer) => (
+      {nearestOffers.map((offer: Offer) => (
         <OfferItem key={offer.id} offer={offer}
-          onCardHovered={(id) => dispatcher(changeSelectedOfferId(id))}
           view={'near-places-list'}
         />
       ))}

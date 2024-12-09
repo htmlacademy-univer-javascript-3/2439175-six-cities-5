@@ -1,28 +1,19 @@
 import Logo from '../logo/logo.tsx';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import {AuthorizationStatus} from '../../enums.ts';
-import {Link} from 'react-router-dom';
-import {logoutAction} from '../../store/api-actions.ts';
+import {LoginButton} from '../login-button/login-button.tsx';
+import {store} from '../../store';
+import {getFavorites} from '../../store/api-actions.ts';
+import {useEffect} from 'react';
 
 export function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
-  const dispatch = useAppDispatch();
-  const signButton = !isAuthorized ? (
-    <Link to={'/login'}>
-      <span className="header__signout">Sign in</span>
-    </Link>
-  ) : (
-    <a className="header__nav-link" href="#">
-      <span className="header__signout" onClick={(evt) => {
-        evt.preventDefault();
-        dispatch(logoutAction());
-      }}
-      >Sign out
-      </span>
-    </a>
-  );
   const userInfo = useAppSelector((state) => state.userInfo);
+  useEffect(() => {
+    store.dispatch(getFavorites());
+  }, [authorizationStatus]);
+  const favouriteOffers = useAppSelector((state) => state.favouriteOffers);
   return (
     <header className="header">
       <div className="container">
@@ -38,11 +29,11 @@ export function Header(): JSX.Element {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">{userInfo.email}</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{favouriteOffers.length}</span>
                   </a>
                 </li>}
               <li className="header__nav-item">
-                {signButton}
+                <LoginButton/>
               </li>
             </ul>
           </nav>
