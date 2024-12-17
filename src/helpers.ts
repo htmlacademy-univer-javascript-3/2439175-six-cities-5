@@ -1,9 +1,10 @@
 import Offer from './types/offer.ts';
 import {City} from './types/city.ts';
 import {SortFilter} from './types/sort-filter.ts';
+import Comment from './types/comment.ts';
 
 export function convertRatingToWidth(rating: number): string {
-  return `${rating * 20}%`;
+  return `${Math.round(rating) * 20}%`;
 }
 
 export function getMonthAndYear(dt: Date): string {
@@ -12,6 +13,14 @@ export function getMonthAndYear(dt: Date): string {
     month: 'long',
     year: 'numeric'
   });
+}
+
+export function PluralOptionally(n: number, word: string): string {
+  return n > 1 ? `${word}s` : word;
+}
+
+export function SliceOptionally<T>(threshold: number, range: T[]): T[] {
+  return range.length > threshold ? range.slice(0, threshold) : range;
 }
 
 export function formatDateToYMD(dt: Date): string {
@@ -48,3 +57,18 @@ export function sortOffers(offers: Offer[], sortFilter: SortFilter): Offer[] {
       return offers;
   }
 }
+
+export function sortByCreationTime(comments: Comment[]): Comment[] {
+  return comments.sort((a, b) => {
+    const aDt = new Date(a.date);
+    const bDt = new Date(b.date);
+    return bDt.getTime() - aDt.getTime();
+  });
+}
+
+export function getRandomElement<T>(array: T[]): T {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+
+

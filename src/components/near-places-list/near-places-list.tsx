@@ -1,10 +1,10 @@
 import Offer from '../../types/offer.ts';
 import OfferItem from '../offer-list/offer-item.tsx';
 import {useAppSelector} from '../../hooks';
-import {Reducers} from '../../enums.ts';
+import {getOffersNearbySliced} from '../../store/selectors.ts';
 
 function NearPlacesList(): JSX.Element {
-  const nearestOffers = useAppSelector((state) => state[Reducers.Offer].offersNearby);
+  const nearestOffers = useAppSelector(getOffersNearbySliced);
   return (
     <div className="near-places__list places__list">
       {nearestOffers.map((offer: Offer) => (

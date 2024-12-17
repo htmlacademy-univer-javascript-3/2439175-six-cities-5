@@ -1,7 +1,7 @@
 import axios, {AxiosError, AxiosInstance, AxiosResponse, InternalAxiosRequestConfig} from 'axios';
 import {getToken} from './token.ts';
 import {StatusCodes} from 'http-status-codes';
-import {processErrorHandle} from './process-error-action.ts';
+import {processErrorHandle} from './handle-error.ts';
 
 type DetailMessageType = {
   type: string;

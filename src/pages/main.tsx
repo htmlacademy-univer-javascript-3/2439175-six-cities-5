@@ -6,10 +6,11 @@ import {Header} from '../components/header/header.tsx';
 import {getFilteredOffers} from '../store/selectors.ts';
 import MainEmpty from './main-empty.tsx';
 import {Spinner} from './spinner/spinner.tsx';
-import {Reducers} from '../enums.ts';
+import {Reducers} from '../types/reducer.ts';
 
 function Main(): JSX.Element {
-  const dataOffersLoadingStatus = useAppSelector((state) => state[Reducers.Main].isOffersLoading);
+  const dataOffersLoadingStatus =
+    useAppSelector((state) => state[Reducers.Main].isOffersLoading);
   const offers = useAppSelector(getFilteredOffers);
 
   if (dataOffersLoadingStatus) {

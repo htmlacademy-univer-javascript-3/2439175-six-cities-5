@@ -1,4 +1,4 @@
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {changeSort} from '../../store/action.ts';
 import {
   DefaultSort,
@@ -7,14 +7,16 @@ import {
   RatingDescendingSort
 } from '../../consts/sort-filter-consts.ts';
 import {SortFilter} from '../../types/sort-filter.ts';
+import {Reducers} from '../../types/reducer.ts';
 
 function SortChoices(): JSX.Element {
   const dispatch = useAppDispatch();
   const handleSortChange = (sortType : SortFilter) => () => {
     dispatch(changeSort(sortType));
   };
+  const isSortsOpened = useAppSelector((state) => state[Reducers.Main].sortsOpened);
   return (
-    <ul className="places__options places__options--custom places__options--opened">
+    <ul className={`places__options places__options--custom ${isSortsOpened ? 'places__options--opened' : ''}`}>
       <li className="places__option places__option--active" tabIndex={0}
         onClick={handleSortChange(DefaultSort)}
       >Popular

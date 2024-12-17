@@ -1,12 +1,14 @@
 import {Header} from '../components/header/header.tsx';
 import {useAppSelector} from '../hooks';
 import FavoritesEmpty from './favorites-empty.tsx';
-import {CITIES} from '../mocks/city-coords.ts';
+import {CITIES} from '../consts/cities.ts';
 import {filterOffersByCity} from '../helpers.ts';
 import {Footer} from '../components/footer/footer.tsx';
 import {FavoritesOffersByCity} from '../components/favorites/favorites-by-city.tsx';
-import {AppRoute, AuthorizationStatus, Reducers} from '../enums.ts';
 import {Navigate} from 'react-router-dom';
+import {Reducers} from '../types/reducer.ts';
+import {AuthorizationStatus} from '../types/authorization-status.ts';
+import {AppRoute} from '../types/app-route.ts';
 
 function Favorites(): JSX.Element {
   const authStatus = useAppSelector((state) => state[Reducers.Auth].status);

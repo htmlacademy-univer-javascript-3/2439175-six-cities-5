@@ -1,8 +1,9 @@
 import {AuthReducer} from '../../types/auth-reducer.ts';
-import {AuthorizationStatus, Reducers} from '../../enums.ts';
 import {createSlice} from '@reduxjs/toolkit';
 import {checkAuthAction, loginAction, logoutAction} from '../api-actions.ts';
 import {dropToken, saveToken} from '../../services/token.ts';
+import {AuthorizationStatus} from '../../types/authorization-status.ts';
+import {Reducers} from '../../types/reducer.ts';
 
 const initialState: AuthReducer = {
   status: AuthorizationStatus.Unknown,

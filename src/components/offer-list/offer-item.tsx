@@ -4,7 +4,9 @@ import {convertRatingToWidth} from '../../helpers.ts';
 import {OfferItemView} from '../../types/offer-item-view.ts';
 import {changeFavourites} from '../../store/api-actions.ts';
 import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus, Reducers} from '../../enums.ts';
+import {Reducers} from '../../types/reducer.ts';
+import {AuthorizationStatus} from '../../types/authorization-status.ts';
+import {AppRoute} from '../../types/app-route.ts';
 
 type OfferItemProps = {
   offer: Offer;
