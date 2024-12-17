@@ -1,6 +1,6 @@
 import {useAppDispatch} from '../../hooks';
 import {changeCity} from '../../store/action.ts';
-import {CITIES} from '../../mocks/city-coords.ts';
+import {CITIES} from '../../consts/cities.ts';
 
 function CitiesList(): JSX.Element {
   const cities = CITIES;

@@ -1,5 +1,4 @@
 import {OfferReducer} from '../../types/offer-reducer.ts';
-import {Reducers} from '../../enums.ts';
 import {createSlice} from '@reduxjs/toolkit';
 import {
   addComment,
@@ -8,6 +7,7 @@ import {
   fetchOfferAction,
   fetchOffersNearby
 } from '../api-actions.ts';
+import {Reducers} from '../../types/reducer.ts';
 
 
 const initialState: OfferReducer = {

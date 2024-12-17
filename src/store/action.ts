@@ -9,3 +9,5 @@ export const changeSort = createAction<SortFilter>('user/changeSort');
 export const changeSelectedOfferId = createAction<string>('user/changeSelectedOfferId');
 
 export const setError = createAction<string | null>('data/setError');
+
+export const changeSortsOpened = createAction('user/changeSortsOpened');

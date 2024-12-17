@@ -5,8 +5,8 @@ import useMap from './use-map.tsx';
 import {CURRENT_MAP_ICON, DEFAULT_MAP_ICON} from '../../consts/map-icon-consts.ts';
 import {useAppSelector} from '../../hooks';
 import {MapView} from '../../types/map-view.ts';
-import {getFilteredOffers} from '../../store/selectors.ts';
-import {Reducers} from '../../enums.ts';
+import {getFilteredOffers, getOffersNearbySliced} from '../../store/selectors.ts';
+import {Reducers} from '../../types/reducer.ts';
 
 const defaultCustomIcon = new Icon({
   iconUrl: DEFAULT_MAP_ICON,
@@ -27,7 +27,8 @@ export type MapProps = {
 export default function Map({view}: MapProps) {
   const city = useAppSelector((state) => state[Reducers.Main].city);
   const offers = useAppSelector(getFilteredOffers);
-  const nearestOffers = useAppSelector((state) => state[Reducers.Offer].offersNearby);
+  const nearestOffers = useAppSelector(getOffersNearbySliced);
+  const currentOffer = useAppSelector((state) => state[Reducers.Offer].offer);
   const offersToDraw = view === 'cities' ? offers : nearestOffers;
   const selectedOfferId = useAppSelector((state) => state[Reducers.Main].selectedOfferId);
   const mapRef = useRef(null);
@@ -51,11 +52,22 @@ export default function Map({view}: MapProps) {
           .addTo(markerLayer);
       });
 
+      if (view === 'offer' && currentOffer) {
+        const marker = new Marker({
+          lat: currentOffer.location.latitude,
+          lng: currentOffer.location.longitude
+        });
+
+        marker
+          .setIcon(currentCustomIcon)
+          .addTo(markerLayer);
+      }
+
       return () => {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offersToDraw, selectedOfferId]);
+  }, [currentOffer, map, offersToDraw, selectedOfferId, view]);
 
   return <section className={`${view}__map`} ref={mapRef}></section>;
 }

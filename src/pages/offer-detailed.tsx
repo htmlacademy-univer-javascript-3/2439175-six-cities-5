@@ -5,12 +5,13 @@ import Map from '../components/map/map.tsx';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {Header} from '../components/header/header.tsx';
 import NotFound from './not-found.tsx';
-import {convertRatingToWidth} from '../helpers.ts';
+import {convertRatingToWidth, PluralOptionally} from '../helpers.ts';
 import {changeFavourites, fetchComments, fetchOfferAction, fetchOffersNearby} from '../store/api-actions.ts';
 import {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
-import {AuthorizationStatus, Reducers} from '../enums.ts';
 import {Spinner} from './spinner/spinner.tsx';
+import {Reducers} from '../types/reducer.ts';
+import {AuthorizationStatus} from '../types/authorization-status.ts';
 
 function OfferDetailed(): JSX.Element {
   const {offerId} = useParams();
@@ -66,7 +67,7 @@ function OfferDetailed(): JSX.Element {
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
-                  <span className="visually-hidden">To bookmarks</span> {/*should bookmark*/}
+                  <span className="visually-hidden">To bookmarks</span>
                 </button>
               </div>
               <div className="offer__rating rating">
@@ -81,10 +82,10 @@ function OfferDetailed(): JSX.Element {
                   {offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {offer.bedrooms} Bedrooms
+                  {offer.bedrooms} {PluralOptionally(offer.bedrooms, 'Bedroom')}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {offer.maxAdults} adults
+                  Max {offer.maxAdults} {PluralOptionally(offer.bedrooms, 'adult')}
                 </li>
               </ul>
               <div className="offer__price">

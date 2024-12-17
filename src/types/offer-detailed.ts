@@ -1,7 +1,7 @@
-import {OfferType} from '../enums/offer-type.ts';
+import {OfferType} from './offer-type.ts';
 import {Location} from './location.ts';
 import {City} from './city.ts';
-import {OfferExtras} from '../enums/offer-extras.ts';
+import {OfferExtras} from './offer-extras.ts';
 import Host from './host.ts';
 
 export type OfferDetailed = {

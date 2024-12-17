@@ -1,13 +1,13 @@
 import {MainReducer} from '../../types/main-reducer.ts';
-import {PARIS} from '../../mocks/city-coords.ts';
+import {PARIS} from '../../consts/cities.ts';
 import {createSlice} from '@reduxjs/toolkit';
-import {Reducers} from '../../enums.ts';
 import {
   changeFavourites,
   fetchFavorites,
   fetchOffersAction,
 } from '../api-actions.ts';
-import {changeCity, changeSelectedOfferId, changeSort, setError} from '../action.ts';
+import {changeCity, changeSelectedOfferId, changeSort, changeSortsOpened, setError} from '../action.ts';
+import {Reducers} from '../../types/reducer.ts';
 
 const initialState: MainReducer = {
   city: PARIS,
@@ -20,6 +20,7 @@ const initialState: MainReducer = {
   favoriteOffers: [],
   favoriteOffersCount: 0,
   offersList: [],
+  sortsOpened: false,
 };
 
 export const mainReducer = createSlice({
@@ -57,6 +58,9 @@ export const mainReducer = createSlice({
             offer.isFavorite = action.payload.isFavorite;
           }
         });
+      })
+      .addCase(changeSortsOpened, (state) => {
+        state.sortsOpened = !state.sortsOpened;
       });
   },
 });

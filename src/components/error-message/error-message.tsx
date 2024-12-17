@@ -1,6 +1,6 @@
 import {useAppSelector} from '../../hooks';
 import './error-message.css';
-import {Reducers} from '../../enums.ts';
+import {Reducers} from '../../types/reducer.ts';
 
 export function ErrorMessage(): JSX.Element | null {
   const error = useAppSelector((state) => state[Reducers.Main].error);

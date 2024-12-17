@@ -11,4 +11,5 @@ export type MainReducer = {
   error: string | null;
   favoriteOffers: Offer[];
   favoriteOffersCount: number;
+  sortsOpened: boolean;
 }

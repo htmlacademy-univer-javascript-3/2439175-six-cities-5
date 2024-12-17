@@ -1,7 +1,7 @@
 import {Header} from '../components/header/header.tsx';
 import CitiesList from '../components/cities-list/cities-list.tsx';
 import {useAppSelector} from '../hooks';
-import {Reducers} from '../enums.ts';
+import {Reducers} from '../types/reducer.ts';
 
 function MainEmpty(): JSX.Element {
   const currentCity = useAppSelector((state) => state[Reducers.Main].city);

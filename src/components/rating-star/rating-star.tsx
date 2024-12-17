@@ -1,4 +1,4 @@
-import {StarsDescription} from '../../const-components.ts';
+import {StarsDescription} from '../../consts/const-components.ts';
 import {ChangeEventHandler} from 'react';
 
 export type RatingStarProps = {

@@ -1,6 +1,8 @@
 import {useAppSelector} from '../../hooks';
-import {AppRoute, AuthorizationStatus, Reducers} from '../../enums.ts';
 import {Navigate} from 'react-router-dom';
+import {Reducers} from '../../types/reducer.ts';
+import {AuthorizationStatus} from '../../types/authorization-status.ts';
+import {AppRoute} from '../../types/app-route.ts';
 
 type PublicOnlyRouteProps = {
   children: JSX.Element;
