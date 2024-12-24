@@ -52,7 +52,7 @@ export function FavoriteOfferItem({offer}: FavoriteOfferItemProps): JSX.Element 
         </div>
         <Link to={`/offer/${offer.id}`}>
           <h2 className="place-card__name">
-            <a>{offer.title}</a>
+            <span>{offer.title}</span>
           </h2>
         </Link>
         <p className="place-card__type">{offer.type}</p>

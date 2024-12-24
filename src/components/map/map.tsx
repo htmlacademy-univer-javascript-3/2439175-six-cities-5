@@ -25,14 +25,13 @@ export type MapProps = {
 };
 
 export default function Map({view}: MapProps) {
-  const city = useAppSelector((state) => state[Reducers.Main].city);
   const offers = useAppSelector(getFilteredOffers);
   const nearestOffers = useAppSelector(getOffersNearbySliced);
   const currentOffer = useAppSelector((state) => state[Reducers.Offer].offer);
   const offersToDraw = view === 'cities' ? offers : nearestOffers;
   const selectedOfferId = useAppSelector((state) => state[Reducers.Main].selectedOfferId);
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef);
 
   useEffect(() => {
     if (map) {

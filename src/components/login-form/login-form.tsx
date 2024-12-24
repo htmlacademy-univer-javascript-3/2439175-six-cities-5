@@ -1,6 +1,6 @@
 import {ChangeEvent, FormEvent, useState} from 'react';
 import {useAppDispatch} from '../../hooks';
-import {fetchFavorites, loginAction} from '../../store/api-actions.ts';
+import {fetchFavorites, getOffers, loginAction} from '../../store/api-actions.ts';
 import {processErrorHandle} from '../../services/handle-error.ts';
 
 export function LoginForm(): JSX.Element {
@@ -23,6 +23,7 @@ export function LoginForm(): JSX.Element {
       }))
         .then(() => {
           dispatch(fetchFavorites());
+          dispatch(getOffers());
         });
     } else {
       processErrorHandle('Password should contain at least 1 letter and digit');

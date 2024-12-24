@@ -8,6 +8,7 @@ import {
   fetchOffersNearby
 } from '../api-actions.ts';
 import {Reducers} from '../../types/reducer.ts';
+import {OfferDetailed} from '../../types/offer-detailed.ts';
 
 
 const initialState: OfferReducer = {
@@ -37,7 +38,7 @@ export const offerReducer = createSlice({
         state.offersNearby = action.payload;
       })
       .addCase(changeFavourites.fulfilled, (state, action) => {
-        state.offer = action.payload;
+        state.offer = action.payload as OfferDetailed;
       })
       .addCase(addComment.fulfilled, (state, action) => {
         state.comments.push(action.payload);
