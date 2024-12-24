@@ -1,4 +1,7 @@
+import {OrderType} from './order-type.ts';
+import {SortOrder} from './sort-order.ts';
+
 export type SortFilter = {
-  filter: 'default' | 'rating' | 'price';
-  order?: 'asc' | 'desc';
+  filter: OrderType;
+  order?: SortOrder;
 }

@@ -2,6 +2,8 @@ import Offer from './types/offer.ts';
 import {City} from './types/city.ts';
 import {SortFilter} from './types/sort-filter.ts';
 import Comment from './types/comment.ts';
+import {OrderType} from './types/order-type.ts';
+import {SortOrder} from './types/sort-order.ts';
 
 export function convertRatingToWidth(rating: number): string {
   return `${Math.round(rating) * 20}%`;
@@ -47,11 +49,11 @@ export function sortOffersByRating(offers: Offer[]): Offer[] {
 
 export function sortOffers(offers: Offer[], sortFilter: SortFilter): Offer[] {
   switch (sortFilter.filter) {
-    case 'default':
+    case OrderType.Default:
       return offers;
-    case 'price':
-      return sortOffersByPrice(offers, sortFilter.order === 'asc');
-    case 'rating':
+    case OrderType.Price:
+      return sortOffersByPrice(offers, sortFilter.order === SortOrder.Ascending);
+    case OrderType.Rating:
       return sortOffersByRating(offers);
     default:
       return offers;

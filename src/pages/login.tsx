@@ -41,9 +41,9 @@ function Login(): JSX.Element {
           <section className="locations locations--login locations--current">
             <Link to={AppRoute.Root}>
               <div className="locations__item" onMouseEnter={handleClick()}>
-                <a className="locations__item-link" href="#">
+                <span className="locations__item-link">
                   <span>{randomCity.name}</span>
-                </a>
+                </span>
               </div>
             </Link>
           </section>

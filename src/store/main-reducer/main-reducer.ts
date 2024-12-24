@@ -1,18 +1,16 @@
 import {MainReducer} from '../../types/main-reducer.ts';
 import {PARIS} from '../../consts/cities.ts';
 import {createSlice} from '@reduxjs/toolkit';
-import {
-  changeFavourites,
-  fetchFavorites,
-  fetchOffersAction,
-} from '../api-actions.ts';
+import {changeFavourites, fetchFavorites, getOffers, logoutAction,} from '../api-actions.ts';
 import {changeCity, changeSelectedOfferId, changeSort, changeSortsOpened, setError} from '../action.ts';
 import {Reducers} from '../../types/reducer.ts';
+import {OrderType} from '../../types/order-type.ts';
+import Offer from '../../types/offer.ts';
 
 const initialState: MainReducer = {
   city: PARIS,
   sortFilter: {
-    filter: 'default'
+    filter: OrderType.Default
   },
   selectedOfferId: null,
   isOffersLoading: false,
@@ -32,11 +30,11 @@ export const mainReducer = createSlice({
       .addCase(changeCity, (state, action) => {
         state.city = action.payload;
       })
-      .addCase(fetchOffersAction.fulfilled, (state, action) => {
+      .addCase(getOffers.fulfilled, (state, action) => {
         state.offersList = action.payload;
         state.isOffersLoading = false;
       })
-      .addCase(fetchOffersAction.pending, (state) => {
+      .addCase(getOffers.pending, (state) => {
         state.isOffersLoading = true;
       })
       .addCase(changeSort, (state, action) => {
@@ -53,14 +51,32 @@ export const mainReducer = createSlice({
         state.favoriteOffersCount = action.payload.length;
       })
       .addCase(changeFavourites.fulfilled, (state, action) => {
-        state.offersList.forEach((offer) => {
-          if (offer.id === action.payload.id) {
-            offer.isFavorite = action.payload.isFavorite;
-          }
-        });
+        if (action.payload.isFavorite) {
+          state.favoriteOffers.push(action.payload as Offer);
+          state.offersList.map((o) => {
+            if (o.id === action.payload.id) {
+              o.isFavorite = true;
+            }
+          });
+          state.favoriteOffersCount++;
+        } else {
+          state.favoriteOffers = state.favoriteOffers.filter((o) => o.id !== action.payload.id);
+          state.offersList.map((o) => {
+            if (o.id === action.payload.id) {
+              o.isFavorite = false;
+            }
+          });
+          state.favoriteOffersCount--;
+        }
       })
       .addCase(changeSortsOpened, (state) => {
         state.sortsOpened = !state.sortsOpened;
+      }).addCase(logoutAction.fulfilled, (state) => {
+        state.favoriteOffers = [];
+        state.favoriteOffersCount = 0;
+        state.offersList.forEach((o) => {
+          o.isFavorite = false;
+        });
       });
   },
 });

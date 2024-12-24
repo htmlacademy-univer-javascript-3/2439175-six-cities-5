@@ -10,7 +10,7 @@ import {OfferDetailed} from '../types/offer-detailed.ts';
 import {SendCommentData} from '../types/send-comment-data.ts';
 import {APIRoute} from '../types/api-route.ts';
 
-export const fetchOffersAction = createAsyncThunk<Offer[], undefined, {
+export const getOffers = createAsyncThunk<Offer[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -104,7 +104,7 @@ export const fetchFavorites = createAsyncThunk<Offer[], undefined, {
   }
 );
 
-export const changeFavourites = createAsyncThunk<OfferDetailed, {offerId: string | undefined; status: 0 | 1}, {
+export const changeFavourites = createAsyncThunk<OfferDetailed | Offer, {offerId: string | undefined; status: 0 | 1}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;

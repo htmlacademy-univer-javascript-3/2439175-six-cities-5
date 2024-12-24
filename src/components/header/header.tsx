@@ -1,16 +1,13 @@
 import Logo from '../logo/logo.tsx';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppSelector} from '../../hooks';
 import {LoginButton} from '../login-button/login-button.tsx';
 import {Link} from 'react-router-dom';
-import {fetchFavorites} from '../../store/api-actions.ts';
 import {Reducers} from '../../types/reducer.ts';
 import {AuthorizationStatus} from '../../types/authorization-status.ts';
 import {AppRoute} from '../../types/app-route.ts';
 
 export function Header(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state[Reducers.Auth].status);
-  const dispatch = useAppDispatch();
-  dispatch(fetchFavorites());
   const isAuthorized = authorizationStatus === AuthorizationStatus.Auth;
   const userInfo = useAppSelector((state) => state[Reducers.Auth].user);
   const favoriteOffersCount = useAppSelector((state) => state[Reducers.Main].favoriteOffersCount);

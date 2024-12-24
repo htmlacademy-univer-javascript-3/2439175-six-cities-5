@@ -1,9 +1,11 @@
 import {useRef, useState, useEffect, MutableRefObject} from 'react';
 import {Map, TileLayer} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import {City} from '../../types/city.ts';
+import {useAppSelector} from '../../hooks';
+import {Reducers} from '../../types/reducer.ts';
 
-function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City) {
+function useMap(mapRef: MutableRefObject<HTMLElement | null>) {
+  const city = useAppSelector((state) => state[Reducers.Main].city);
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
 
@@ -31,6 +33,15 @@ function useMap(mapRef: MutableRefObject<HTMLElement | null>, city: City) {
       isRenderedRef.current = true;
     }
   }, [mapRef, city]);
+
+  useEffect(() => {
+    if (map) {
+      map.setView(
+        [city.location.latitude, city.location.longitude],
+        city.location.zoom
+      );
+    }
+  }, [map, city]);
 
   return map;
 }

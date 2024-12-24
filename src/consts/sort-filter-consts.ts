@@ -1,20 +1,22 @@
 import {SortFilter} from '../types/sort-filter.ts';
+import {OrderType} from '../types/order-type.ts';
+import {SortOrder} from '../types/sort-order.ts';
 
 export const DefaultSort: SortFilter = {
-  filter: 'default'
+  filter: OrderType.Default
 };
 
 export const RatingDescendingSort : SortFilter = {
-  filter: 'rating',
-  order: 'desc'
+  filter: OrderType.Rating,
+  order: SortOrder.Descending
 };
 
 export const PriceDescendingSort : SortFilter = {
-  filter: 'price',
-  order: 'desc'
+  filter: OrderType.Price,
+  order: SortOrder.Descending
 };
 
 export const PriceAscendingSort : SortFilter = {
-  filter: 'price',
-  order: 'asc'
+  filter: OrderType.Price,
+  order: SortOrder.Ascending
 };
